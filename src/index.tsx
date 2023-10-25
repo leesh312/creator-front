@@ -7,7 +7,7 @@ import {EuiProvider} from '@elastic/eui';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <EuiProvider colorMode="dark">
+    <EuiProvider colorMode="light">
       <App />
     </EuiProvider>
   </React.StrictMode>
