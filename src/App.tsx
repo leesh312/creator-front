@@ -1,5 +1,5 @@
 import './App.scss';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
   EuiPage, EuiPageBody, EuiPageSection, EuiPageSidebar, EuiSideNav, EuiIcon, slugify, EuiHeader,
   EuiHeaderLogo,
@@ -17,11 +17,32 @@ import {
   EuiCard,
   EuiDescriptionList,
 } from "@elastic/eui";
+import {useFetchChannel, useSearch} from "./api/apis";
+import _ from "lodash"
 
 function App() {
   const [isSideNavOpenOnMobile, setIsSideNavOpenOnMobile] = useState(false);
   const [selectedItemName, setSelectedItem] = useState('Time stuff');
   const [value, setValue] = useState("");
+  const [searchQuery, setSearchQuery] = useState("")
+  const [channelId, setChannelId] = useState("")
+  const { data: searchResult } = useSearch(searchQuery)
+  const { data: channelData } = useFetchChannel(channelId)
+
+  useEffect(() => {
+    if (!searchResult) {
+      return;
+    }
+
+    const channel = _.chain(searchResult!!).filter((e) => { return e.kind === "youtube#searchResult" }).first().value()
+    if (channel.id?.channelId) {
+      setChannelId(channel.id?.channelId)
+    } else {
+      setChannelId("")
+    }
+  }, [searchResult]);
+
+  console.log("channelData", channelData)
 
   const toggleOpenOnMobile = () => {
     setIsSideNavOpenOnMobile(!isSideNavOpenOnMobile);
@@ -45,14 +66,15 @@ function App() {
 
   const sideNav = [
     createItem('인플루언서', {
+      key: 'a',
       onClick: undefined,
       icon: <EuiIcon type="logoElasticsearch"/>,
       items: [
         createItem('전체'),
         createItem('유튜브'),
-        createItem('틱톡'),
-        createItem('인스타그램'),
-        createItem('아프리카TV'),
+        // createItem('틱톡'),
+        // createItem('인스타그램'),
+        // createItem('아프리카TV'),
         createItem('트위치'),
       ],
     }),
@@ -60,7 +82,8 @@ function App() {
       onClick: undefined,
       icon: <EuiIcon type="logoElasticStack"/>,
       items: [
-        createItem('분야 추가 요청'),
+        createItem('분야 추가 요청', {
+          key: 'b', }),
         createItem('음식'),
         createItem('건강/의학'),
         createItem('도서'),
@@ -82,6 +105,10 @@ function App() {
       ],
     }),
   ];
+
+  const onChangeSearchbar = (e: string) => {
+    setSearchQuery(e)
+  }
 
   const favoriteVideoGames = [
     {
@@ -122,6 +149,7 @@ function App() {
               isClearable
               aria-label="Use aria labels when no actual label is in use"
               fullWidth
+              onSearch={onChangeSearchbar}
             />
           </EuiHeaderSectionItem>
 
@@ -168,13 +196,13 @@ function App() {
               >
                 <EuiAvatar
                   size="xl"
-                  name="Cat"
-                  imageUrl="https://yt3.googleusercontent.com/C7bTHnoo1S_MRbJXn4VwncNpB87C2aioJC_sKvgM-CGw_xgdxwiz0EFEqzj0SRVz6An2h81T4Q=s176-c-k-c0x00ffffff-no-rj"
+                  name=""
+                  imageUrl={channelData?.snippet?.thumbnails?.medium?.url || ""}
                 />
               </EuiFlexItem>
               <EuiFlexItem>
                 <EuiTitle size="m">
-                  <h3>침착맨</h3>
+                  <h3>{channelData?.snippet?.title}</h3>
                 </EuiTitle>
               </EuiFlexItem>
               <EuiFlexItem>
@@ -184,14 +212,14 @@ function App() {
             <EuiFlexGroup>
               <EuiFlexItem>
                 <EuiStat
-                  title="227만명"
+                  title={channelData?.statistics?.subscriberCount || "0"}
                   description="구독자 수"
                   textAlign="left"
                 />
               </EuiFlexItem>
               <EuiFlexItem>
                 <EuiStat
-                  title="6,623개"
+                  title={channelData?.statistics?.videoCount || "0"}
                   description="동영상"
                   textAlign="left"
                 />
