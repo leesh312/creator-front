@@ -34,7 +34,7 @@ function YoutubeChannelDetail() {
   const [value, setValue] = useState("");
   const [youtubeChannelId, setYoutubeChannelId] = useState("")
 
-  const { data: channelData } = useFetchChannel(youtubeChannelId)
+  const { data: channelData } = useFetchChannel(Number(channelId))
   const { mutate: writeReviewMutate } = useWriteReview()
   const { data: reviews } = useFetchReviews(channelId)
 
@@ -162,12 +162,12 @@ function YoutubeChannelDetail() {
                 <EuiAvatar
                   size="xl"
                   name=""
-                  imageUrl={channelData?.snippet?.thumbnails?.medium?.url || ""}
+                  imageUrl={channelData?.thumbnailUrl || ""}
                 />
               </EuiFlexItem>
               <EuiFlexItem>
                 <EuiTitle size="m">
-                  <h3>{channelData?.snippet?.title}</h3>
+                  <h3>{channelData?.name}</h3>
                 </EuiTitle>
               </EuiFlexItem>
               <EuiFlexItem>
@@ -177,14 +177,14 @@ function YoutubeChannelDetail() {
             <EuiFlexGroup>
               <EuiFlexItem>
                 <EuiStat
-                  title={channelData?.statistics?.subscriberCount || "0"}
+                  title={channelData?.followerCount || "0"}
                   description="구독자 수"
                   textAlign="left"
                 />
               </EuiFlexItem>
               <EuiFlexItem>
                 <EuiStat
-                  title={channelData?.statistics?.videoCount || "0"}
+                  title={channelData?.contentsCount || "0"}
                   description="동영상"
                   textAlign="left"
                 />

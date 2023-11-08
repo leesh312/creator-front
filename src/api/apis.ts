@@ -11,15 +11,14 @@ export const useSearch = (q: string) => {
   return useQuery(["/v1/channels/search", q], () => apiSearch(q), { enabled: !!q, refetchOnWindowFocus: false, })
 }
 
-export const apiFetchChannel = async (channelId: string) => {
-  const res = await axios.get<youtube_v3.Schema$ChannelListResponse>(`/v1/y/channels/${channelId}`)
-  const items = res.data.items as youtube_v3.Schema$Channel[];
-  return items.length > 0 ? items[0] : undefined
+export const apiFetchChannel = async (channelId: number) => {
+  const res = await axios.get<SearchChannelResponseItem>(`/v1/channels/${channelId}`)
+  return res.data
 }
 
-export const useFetchChannel = (channelId: string) => {
+export const useFetchChannel = (channelId: number) => {
   return useQuery(
-    ["/v1/y/channels", channelId],
+    ["/v1/channels/", channelId],
     () => apiFetchChannel(channelId),
     { enabled: !!channelId },
   )
