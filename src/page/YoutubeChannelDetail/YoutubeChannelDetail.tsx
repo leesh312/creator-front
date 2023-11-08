@@ -32,26 +32,15 @@ function YoutubeChannelDetail() {
   const navigate = useNavigate();
   const {channelId} = useParams()
   const [value, setValue] = useState("");
-  const [searchQuery, setSearchQuery] = useState("")
   const [youtubeChannelId, setYoutubeChannelId] = useState("")
-  const { data: searchResult } = useSearch(searchQuery)
+
   const { data: channelData } = useFetchChannel(youtubeChannelId)
   const { mutate: writeReviewMutate } = useWriteReview()
   const { data: reviews } = useFetchReviews(channelId)
 
-  console.log("channelData", searchResult)
+
   console.log("reviews", reviews)
 
-  useEffect(() => {
-    if (searchResult && searchResult.items.length === 1) {
-      const item = searchResult.items[0]
-      navigate(`/channels/${item.channelId}`)
-    }
-  }, [searchResult])
-
-  const onChangeSearchbar = (e: string) => {
-    setSearchQuery(e)
-  }
 
   const onSubmitReview = (data: ReviewWriteFormData) => {
     const { summary, text1, score1, text2, score2, text3, score3, text4, score4, } = data;
@@ -157,46 +146,7 @@ function YoutubeChannelDetail() {
     ]
   }
   return (
-    <div className="App">
-      <EuiHeader
-      >
-        <EuiHeaderSection
-          grow
-        >
-          <EuiHeaderSectionItem>
-            <EuiHeaderLogo>Creators Club</EuiHeaderLogo>
-          </EuiHeaderSectionItem>
-          <EuiHeaderSectionItem
-          >
-            <EuiFieldSearch
-              placeholder="인플루언서/분야 검색"
-              isClearable
-              aria-label="Use aria labels when no actual label is in use"
-              fullWidth
-              onSearch={onChangeSearchbar}
-            />
-          </EuiHeaderSectionItem>
-
-        </EuiHeaderSection>
-        <EuiHeaderSectionItem>
-
-          <EuiHeaderSectionItemButton disabled aria-label="Sitewide search">
-            <EuiIcon type="search" size="m"/>
-          </EuiHeaderSectionItemButton>
-
-          <EuiHeaderSectionItemButton disabled aria-label="Account menu">
-            <EuiAvatar isDisabled name="John Username" size="s"/>
-          </EuiHeaderSectionItemButton>
-
-          <EuiHeaderSectionItemButton
-            disabled
-            aria-label="Apps menu with 1 new app"
-            notification="1"
-          >
-            <EuiIcon type="apps" size="m"/>
-          </EuiHeaderSectionItemButton>
-        </EuiHeaderSectionItem>
-      </EuiHeader>
+    <>
       <EuiPage
         paddingSize="none"
         restrictWidth
@@ -281,7 +231,7 @@ function YoutubeChannelDetail() {
           </EuiPageSection>
         </EuiPageBody>
       </EuiPage>
-    </div>
+    </>
   );
 }
 
