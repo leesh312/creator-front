@@ -1,33 +1,81 @@
 import {
-  EuiAvatar,
-  EuiFieldSearch,
-  EuiHeader,
+  EuiPage, EuiPageBody, EuiPageSection, EuiPageSidebar, EuiSideNav, EuiIcon, slugify, EuiHeader,
   EuiHeaderLogo,
-  EuiHeaderSection,
   EuiHeaderSectionItem,
-  EuiHeaderSectionItemButton, EuiIcon
+  EuiHeaderSectionItemButton,
+  EuiAvatar,
+  EuiMarkdownEditor,
+  EuiHeaderSection,
+  EuiFieldSearch,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiTitle,
+  EuiStat,
+  EuiSpacer,
+  EuiCard,
+  EuiDescriptionList,
+  EuiTextArea,
+  EuiDescribedFormGroup,
+  EuiButton,
+  EuiFormRow,
+  EuiSelectableTemplateSitewide,
+  EuiSelectableTemplateSitewideOption,
+  EuiBadge,
+  EuiLink,
+  EuiText,
+  EuiHighlight,
+  EuiSelectableOption,
 } from "@elastic/eui";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useSearch} from "../api/apis";
 import {useNavigate} from "react-router-dom";
+import {css} from '@emotion/react';
+import _ from "lodash"
 
 const Header = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("")
-  const { data: searchResult } = useSearch(searchQuery)
+  const {data: searchResult, isLoading: isLoadingSearch} = useSearch(searchQuery)
 
-  const onChangeSearchbar = (e: string) => {
-    setSearchQuery(e)
-  }
+  const debouncedSetSearchQuery = useMemo(
+    () => _.debounce((value: string) => { setSearchQuery(value)}, 300),
+    []
+  );
 
-  useEffect(() => {
-    if (searchResult && searchResult.items.length === 1) {
-      const item = searchResult.items[0]
-      navigate(`/channels/${item.channelId}`)
-    }
+  const memoSearchQuery = useMemo(() => {
+    return searchResult?.items.map((item) => {
+      return {
+        label: item.name,
+        prepend: (<><img src={item.thumbnailUrl} style={{ "width": "36px" }} /></>),
+        append: <EuiBadge>YOUTUBE</EuiBadge>,
+        data: item,
+      }
+    }) || []
   }, [searchResult])
 
-  console.log("channelData", searchResult)
+  const renderCountryOption = (
+    option: EuiSelectableOption<any>,
+    searchValue: string
+  ) => {
+    return (
+      <>
+        <EuiHighlight search={searchValue}>{option.label}</EuiHighlight>
+        <EuiText size="xs" color="subdued" className="eui-displayBlock">
+          <small>
+            구독자수: {option.followerCount}
+          </small>
+        </EuiText>
+      </>
+    );
+  };
+
+  const onChangeSelect = (_options: EuiSelectableOption<any>, _event: any, selected: EuiSelectableOption<any>) => {
+    const data = selected.data as SearchChannelResponseItem
+    // TODO 검색어 선택한 것으로 바꾸기
+    navigate(`/channels/${data.channelId}`)
+  }
+
+  const searchValueExists = true
 
   return (
     <EuiHeader>
@@ -39,13 +87,44 @@ const Header = () => {
         </EuiHeaderSectionItem>
         <EuiHeaderSectionItem
         >
-          <EuiFieldSearch
-            placeholder="인플루언서/분야 검색"
-            isClearable
-            aria-label="Use aria labels when no actual label is in use"
-            fullWidth
-            onSearch={onChangeSearchbar}
+          <EuiSelectableTemplateSitewide
+            isLoading={isLoadingSearch}
+            options={memoSearchQuery}
+            // listProps={{
+            //   className: 'customListClass',
+            //   css: css`
+            //       .euiSelectableTemplateSitewide__optionMeta--PINK {
+            //           font-weight: ${euiTheme.font.weight.medium};
+            //           color: ${euiTheme.colors.accentText};
+            //       }
+            //   `,
+            // }}
+            onChange={onChangeSelect}
+            searchProps={{
+              onChange: (v) => { debouncedSetSearchQuery(v) },
+            }}
+            renderOption={renderCountryOption}
+            popoverProps={{
+              className: 'customPopoverClass',
+            }}
+            popoverButton={<EuiIcon type="search" size="m"/>}
+            popoverButtonBreakpoints={['xs', 's']}
+            popoverFooter={searchValueExists &&
+              <EuiText color="subdued" size="xs">
+                <EuiFlexGroup
+                  alignItems="center"
+                  gutterSize="s"
+                  responsive={false}
+                  wrap
+                >
+                  <EuiFlexItem grow={false}>
+                    {searchValueExists && <EuiLink>검색 결과 전체 보기</EuiLink>}
+                  </EuiFlexItem>
+                </EuiFlexGroup>
+              </EuiText>
+            }
           />
+
         </EuiHeaderSectionItem>
 
       </EuiHeaderSection>
