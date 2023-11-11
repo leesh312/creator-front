@@ -24,6 +24,7 @@ import {useWriteReview, useFetchChannel, useSearch, useFetchReviews} from "../..
 import _ from "lodash"
 import {useNavigate, useParams} from "react-router-dom";
 import SideNav from "../../layout/SideNav";
+import axios from "axios";
 
 const PositiveStar = ({onClick}: { onClick?: VoidFunction }) => (
   <EuiIcon type="starFilled" onClick={onClick} style={{"color": "#fec514"}}/>)
@@ -45,12 +46,11 @@ function YoutubeChannelDetail() {
 
 
   const onSubmitReview = (data: ReviewWriteFormData) => {
-    const {summary, text1, score1, text2, score2, text3, score3, text4, score4,} = data;
-    const somethingWritten = !!summary || !!text1 || !!text2 || !!text3 || !!text4 || !!score1 || !!score2 || !!score3 || !!score4
-    if (!somethingWritten) {
-      window.alert("내용을 하나라도 작성해주세요")
+    if (!verifySubmitData(data)) {
       return
     }
+
+    const {summary, text1, score1, text2, score2, text3, score3, text4, score4} = data
 
     const payload: WriteReviewRequest = {
       target: 1,
@@ -65,7 +65,23 @@ function YoutubeChannelDetail() {
       evalScore4: score4,
     }
 
-    writeReviewMutate(payload)
+    writeReviewMutate(payload, {
+      onSuccess: (data) => {
+        window.alert("리뷰가 등록되었습니다")
+        window.document.location.reload()
+      }
+    })
+  }
+
+  function verifySubmitData(data: ReviewWriteFormData) {
+    const {summary, text1, score1, text2, score2, text3, score3, text4, score4,} = data;
+    const somethingWritten = !!summary || !!text1 || !!text2 || !!text3 || !!text4 || !!score1 || !!score2 || !!score3 || !!score4
+    if (!somethingWritten) {
+      window.alert("내용을 한 영역 이상 작성해주세요")
+      return false
+    }
+
+    return true
   }
 
   const renderStars = (score?: number, onClick?: VoidFunction) => {
@@ -243,6 +259,7 @@ interface ReviewWriteFormData {
 }
 
 const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) => void }) => {
+  const navigate = useNavigate();
   const [summary, setSummary] = useState("")
   const [text1, setText1] = useState("")
   const [score1, setScore1] = useState<number | undefined>(undefined)
@@ -260,6 +277,14 @@ const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) =>
     onSubmit({summary, text1, text2, text3, text4, score1, score2, score3, score4})
   }
 
+  const onFocusTextArea = () => {
+    const hasAuth = !!axios.defaults.headers.Authorization
+    if(!hasAuth) {
+      window.alert("로그인 후 리뷰를 작성할 수 있습니다")
+      navigate("/signin")
+    }
+  }
+
   return (
     <>
       <EuiFormRow label="인플루언서 종합평가" fullWidth>
@@ -270,6 +295,7 @@ const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) =>
           onChange={(e) => {
             setSummary(e.target.value)
           }}
+          onFocus={onFocusTextArea}
           fullWidth
           compressed
         />
@@ -295,6 +321,7 @@ const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) =>
           onChange={(e) => {
             setText1(e.target.value)
           }}
+          onFocus={onFocusTextArea}
           fullWidth
           compressed
         />
@@ -320,6 +347,7 @@ const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) =>
           onChange={(e) => {
             setText2(e.target.value)
           }}
+          onFocus={onFocusTextArea}
           fullWidth
           compressed
         />
@@ -345,6 +373,7 @@ const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) =>
           onChange={(e) => {
             setText3(e.target.value)
           }}
+          onFocus={onFocusTextArea}
           fullWidth
           compressed
         />
@@ -370,6 +399,7 @@ const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) =>
           onChange={(e) => {
             setText4(e.target.value)
           }}
+          onFocus={onFocusTextArea}
           fullWidth
           compressed
         />

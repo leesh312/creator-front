@@ -21,7 +21,7 @@ function App() {
       >
         <SideNav />
         <Routes>
-          <Route path="/" element={<YoutubeChannelDetail/>}/>
+          <Route path="/" element={<Dashboard/>}/>
           <Route path="/channels/:channelId" element={<YoutubeChannelDetail/>}/>
           <Route path="/signin" element={<Signin />}/>
           <Route path="/signup" element={<Signup />}/>
