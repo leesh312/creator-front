@@ -25,8 +25,10 @@ import _ from "lodash"
 import {useNavigate, useParams} from "react-router-dom";
 import SideNav from "../../layout/SideNav/SideNav";
 
-const PositiveStar = ({ onClick } : { onClick?: VoidFunction}) => (<EuiIcon type="starFilled" onClick={onClick} style={{"color": "#fec514"}}/>)
-const NegativeStar = ({ onClick } : { onClick?: VoidFunction}) => (<EuiIcon type="starFilled" onClick={onClick} style={{"color": "#abb4c4"}}/>)
+const PositiveStar = ({onClick}: { onClick?: VoidFunction }) => (
+  <EuiIcon type="starFilled" onClick={onClick} style={{"color": "#fec514"}}/>)
+const NegativeStar = ({onClick}: { onClick?: VoidFunction }) => (
+  <EuiIcon type="starFilled" onClick={onClick} style={{"color": "#abb4c4"}}/>)
 
 function YoutubeChannelDetail() {
   const navigate = useNavigate();
@@ -34,16 +36,16 @@ function YoutubeChannelDetail() {
   const [value, setValue] = useState("");
   const [youtubeChannelId, setYoutubeChannelId] = useState("")
 
-  const { data: channelData } = useFetchChannel(Number(channelId))
-  const { mutate: writeReviewMutate } = useWriteReview()
-  const { data: reviews } = useFetchReviews(channelId)
+  const {data: channelData} = useFetchChannel(Number(channelId))
+  const {mutate: writeReviewMutate} = useWriteReview()
+  const {data: reviews} = useFetchReviews(channelId)
 
 
   console.log("reviews", reviews)
 
 
   const onSubmitReview = (data: ReviewWriteFormData) => {
-    const { summary, text1, score1, text2, score2, text3, score3, text4, score4, } = data;
+    const {summary, text1, score1, text2, score2, text3, score3, text4, score4,} = data;
     const somethingWritten = !!summary || !!text1 || !!text2 || !!text3 || !!text4 || !!score1 || !!score2 || !!score3 || !!score4
     if (!somethingWritten) {
       window.alert("내용을 하나라도 작성해주세요")
@@ -69,11 +71,11 @@ function YoutubeChannelDetail() {
   const renderStars = (score?: number, onClick?: VoidFunction) => {
     return [1, 2, 3, 4, 5].map((i) => {
       const value = !!score && score >= i
-      return value ? <PositiveStar onClick={onClick} /> : <NegativeStar onClick={onClick} />
+      return value ? <PositiveStar onClick={onClick}/> : <NegativeStar onClick={onClick}/>
     })
   }
 
-  const createReviewValues = (review: Review) : Array<{
+  const createReviewValues = (review: Review): Array<{
     title: NonNullable<ReactNode>;
     description: NonNullable<ReactNode>;
   }> => {
@@ -83,9 +85,9 @@ function YoutubeChannelDetail() {
         title: '커뮤니케이션',
         description: <>
           <div>
-            { renderStars(review.evalScore1) }
+            {renderStars(review.evalScore1)}
           </div>
-          { !!review.evalText1 && (
+          {!!review.evalText1 && (
             <>
               <EuiSpacer size="s"/>
               <div>
@@ -99,9 +101,9 @@ function YoutubeChannelDetail() {
         title: '제품 이해도',
         description: <>
           <div>
-            { renderStars(review.evalScore2) }
+            {renderStars(review.evalScore2)}
           </div>
-          { !!review.evalText2 && (
+          {!!review.evalText2 && (
             <>
               <EuiSpacer size="s"/>
               <div>
@@ -115,9 +117,9 @@ function YoutubeChannelDetail() {
         title: '피드백 수용도',
         description: <>
           <div>
-            { renderStars(review.evalScore3) }
+            {renderStars(review.evalScore3)}
           </div>
-          { !!review.evalText3 && (
+          {!!review.evalText3 && (
             <>
               <EuiSpacer size="s"/>
               <div>
@@ -131,9 +133,9 @@ function YoutubeChannelDetail() {
         title: '광고효율',
         description: <>
           <div>
-            { renderStars(review.evalScore4) }
+            {renderStars(review.evalScore4)}
           </div>
-          { !!review.evalText4 && (
+          {!!review.evalText4 && (
             <>
               <EuiSpacer size="s"/>
               <div>
@@ -147,90 +149,83 @@ function YoutubeChannelDetail() {
   }
   return (
     <>
-      <EuiPage
-        paddingSize="none"
-        restrictWidth
-        grow
-      >
-        <SideNav />
-        <EuiPageBody paddingSize="none" panelled>
-          <EuiPageSection>
-            <EuiFlexGroup>
-              <EuiFlexItem
-                grow={false}
+      <EuiPageBody paddingSize="none" panelled>
+        <EuiPageSection>
+          <EuiFlexGroup>
+            <EuiFlexItem
+              grow={false}
+            >
+              <EuiAvatar
+                size="xl"
+                name=""
+                imageUrl={channelData?.thumbnailUrl || ""}
+              />
+            </EuiFlexItem>
+            <EuiFlexItem>
+              <EuiTitle size="m">
+                <h3>{channelData?.name}</h3>
+              </EuiTitle>
+            </EuiFlexItem>
+            <EuiFlexItem>
+            </EuiFlexItem>
+          </EuiFlexGroup>
+          <EuiSpacer/>
+          <EuiFlexGroup>
+            <EuiFlexItem>
+              <EuiStat
+                title={channelData?.followerCount || "0"}
+                description="구독자 수"
+                textAlign="left"
+              />
+            </EuiFlexItem>
+            <EuiFlexItem>
+              <EuiStat
+                title={channelData?.contentsCount || "0"}
+                description="동영상"
+                textAlign="left"
+              />
+            </EuiFlexItem>
+          </EuiFlexGroup>
+
+          <EuiSpacer size="xl"/>
+
+          <EuiTitle size="xs">
+            <h3>리뷰</h3>
+          </EuiTitle>
+          <EuiSpacer size="xs"/>
+          {reviews?.map((review) => (
+            <>
+              <EuiCard
+                textAlign="left"
+                title={""}
+                titleSize="xs"
+                hasBorder
               >
-                <EuiAvatar
-                  size="xl"
-                  name=""
-                  imageUrl={channelData?.thumbnailUrl || ""}
+                {!!review.evalSummary && (
+                  <>
+                    {review.evalSummary}
+                    <EuiSpacer/>
+                  </>
+                )}
+                <EuiDescriptionList
+                  type="column"
+                  align={"left"}
+                  compressed
+                  listItems={createReviewValues(review)}
                 />
-              </EuiFlexItem>
-              <EuiFlexItem>
-                <EuiTitle size="m">
-                  <h3>{channelData?.name}</h3>
-                </EuiTitle>
-              </EuiFlexItem>
-              <EuiFlexItem>
-              </EuiFlexItem>
-            </EuiFlexGroup>
-            <EuiSpacer />
-            <EuiFlexGroup>
-              <EuiFlexItem>
-                <EuiStat
-                  title={channelData?.followerCount || "0"}
-                  description="구독자 수"
-                  textAlign="left"
-                />
-              </EuiFlexItem>
-              <EuiFlexItem>
-                <EuiStat
-                  title={channelData?.contentsCount || "0"}
-                  description="동영상"
-                  textAlign="left"
-                />
-              </EuiFlexItem>
-            </EuiFlexGroup>
-
-            <EuiSpacer size="xl"/>
-
-            <EuiTitle size="xs">
-              <h3>리뷰</h3>
-            </EuiTitle>
-            <EuiSpacer size="xs" />
-            { reviews?.map((review) => (
-              <>
-                <EuiCard
-                  textAlign="left"
-                  title={""}
-                  titleSize="xs"
-                  hasBorder
-                >
-                  { !!review.evalSummary && (
-                    <>
-                      {review.evalSummary}
-                      <EuiSpacer />
-                    </>
-                  )}
-                  <EuiDescriptionList
-                    type="column"
-                    align={"left"}
-                    compressed
-                    listItems={createReviewValues(review)}
-                  />
-                </EuiCard>
-                <EuiSpacer/>
-              </>
-            ))}
-            <EuiTitle size="s">
-              <h3>리뷰작성</h3>
-            </EuiTitle>
-            <EuiSpacer size="m" />
-            <ReviewWriteForm
-              onSubmit={onSubmitReview}
-            />
-          </EuiPageSection>
-        </EuiPageBody>
-      </EuiPage>
+              </EuiCard>
+              <EuiSpacer/>
+            </>
+          ))}
+          <EuiTitle size="s">
+            <h3>리뷰작성</h3>
+          </EuiTitle>
+          <EuiSpacer size="m"/>
+          <ReviewWriteForm
+            onSubmit={onSubmitReview}
+          />
+        </EuiPageSection>
+      </EuiPageBody>
     </>
   );
 }
@@ -247,22 +242,22 @@ interface ReviewWriteFormData {
   score4?: number
 }
 
-const ReviewWriteForm = ({ onSubmit } : { onSubmit?: (data: ReviewWriteFormData) => void}) => {
-  const [ summary, setSummary ] = useState("")
-  const [ text1, setText1 ] = useState("")
-  const [ score1, setScore1 ] = useState<number | undefined>(undefined)
-  const [ text2, setText2 ] = useState("")
-  const [ score2, setScore2 ] = useState<number | undefined>(undefined)
-  const [ text3, setText3 ] = useState("")
-  const [ score3, setScore3 ] = useState<number | undefined>(undefined)
-  const [ text4, setText4 ] = useState("")
-  const [ score4, setScore4 ] = useState<number | undefined>(undefined)
+const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) => void }) => {
+  const [summary, setSummary] = useState("")
+  const [text1, setText1] = useState("")
+  const [score1, setScore1] = useState<number | undefined>(undefined)
+  const [text2, setText2] = useState("")
+  const [score2, setScore2] = useState<number | undefined>(undefined)
+  const [text3, setText3] = useState("")
+  const [score3, setScore3] = useState<number | undefined>(undefined)
+  const [text4, setText4] = useState("")
+  const [score4, setScore4] = useState<number | undefined>(undefined)
 
   const onClick = () => {
     if (!onSubmit)
       return
 
-    onSubmit({ summary, text1, text2, text3, text4, score1, score2, score3, score4})
+    onSubmit({summary, text1, text2, text3, text4, score1, score2, score3, score4})
   }
 
   return (
@@ -272,7 +267,9 @@ const ReviewWriteForm = ({ onSubmit } : { onSubmit?: (data: ReviewWriteFormData)
           placeholder=""
           aria-label=""
           value={summary}
-          onChange={(e) => { setSummary(e.target.value)}}
+          onChange={(e) => {
+            setSummary(e.target.value)
+          }}
           fullWidth
           compressed
         />
@@ -280,7 +277,7 @@ const ReviewWriteForm = ({ onSubmit } : { onSubmit?: (data: ReviewWriteFormData)
       <EuiFormRow label={
         <>
           커뮤니케이션
-          <span style={{ "verticalAlign": "text-bottom", "marginLeft": "8px" }}>
+          <span style={{"verticalAlign": "text-bottom", "marginLeft": "8px"}}>
             {[1, 2, 3, 4, 5].map((i) => {
               const value = !!score1 && score1 >= i
               const onClick = () => {
@@ -305,7 +302,7 @@ const ReviewWriteForm = ({ onSubmit } : { onSubmit?: (data: ReviewWriteFormData)
       <EuiFormRow label={
         <>
           제품 이해도
-          <span style={{ "verticalAlign": "text-bottom", "marginLeft": "8px" }}>
+          <span style={{"verticalAlign": "text-bottom", "marginLeft": "8px"}}>
             {[1, 2, 3, 4, 5].map((i) => {
               const value = !!score2 && score2 >= i
               const onClick = () => {
@@ -330,7 +327,7 @@ const ReviewWriteForm = ({ onSubmit } : { onSubmit?: (data: ReviewWriteFormData)
       <EuiFormRow label={
         <>
           피드백 수용도
-          <span style={{ "verticalAlign": "text-bottom", "marginLeft": "8px" }}>
+          <span style={{"verticalAlign": "text-bottom", "marginLeft": "8px"}}>
             {[1, 2, 3, 4, 5].map((i) => {
               const value = !!score3 && score3 >= i
               const onClick = () => {
@@ -355,7 +352,7 @@ const ReviewWriteForm = ({ onSubmit } : { onSubmit?: (data: ReviewWriteFormData)
       <EuiFormRow label={
         <>
           광고효율
-          <span style={{ "verticalAlign": "text-bottom", "marginLeft": "8px" }}>
+          <span style={{"verticalAlign": "text-bottom", "marginLeft": "8px"}}>
             {[1, 2, 3, 4, 5].map((i) => {
               const value = !!score4 && score4 >= i
               const onClick = () => {
@@ -377,7 +374,7 @@ const ReviewWriteForm = ({ onSubmit } : { onSubmit?: (data: ReviewWriteFormData)
           compressed
         />
       </EuiFormRow>
-      <EuiSpacer />
+      <EuiSpacer/>
       <EuiFlexGroup
         responsive={false}
         gutterSize="s"

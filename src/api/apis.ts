@@ -47,3 +47,26 @@ export const useFetchReviews = (channelId: string|undefined) => {
     { enabled: !!channelId }
   )
 }
+
+interface SignupAsAdvertiserRequest {
+  email: string
+  password: string
+  corpName: string
+  name: string
+  position: string
+  phone: string
+  agree1: boolean
+  agree2: boolean
+  agree3: boolean
+}
+
+export const apiSignupAdvertiser = async (payload: SignupAsAdvertiserRequest) => {
+  const res = await axios.post<{ memberId: number }>(`/v1/advertiser/signup`, payload)
+  return res.data
+}
+
+export const useSignupAdvertiser = () => {
+  return useMutation(
+    apiSignupAdvertiser
+  )
+}
