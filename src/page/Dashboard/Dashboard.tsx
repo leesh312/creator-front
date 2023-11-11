@@ -68,6 +68,8 @@ const Dashboard = () => {
             return (
               <EuiFlexItem
                 grow={false}
+                onClick={() => { navigate(`/channels/1`) }}
+                style={{ cursor: "pointer" }}
               >
                 <img
                   src={item.videoThumbnail}
