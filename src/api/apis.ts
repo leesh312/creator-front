@@ -1,5 +1,4 @@
 import axios from "axios";
-import {youtube_v3} from "googleapis";
 import {useMutation, useQuery} from "react-query";
 
 export const apiSearch = async (q: string) => {
@@ -68,5 +67,21 @@ export const apiSignupAdvertiser = async (payload: SignupAsAdvertiserRequest) =>
 export const useSignupAdvertiser = () => {
   return useMutation(
     apiSignupAdvertiser
+  )
+}
+
+interface SigninRequest {
+  email: string
+  password: string
+}
+
+export const apiSignin = async (payload: SigninRequest) => {
+  const res = await axios.post<{ token: string }>(`/v1/signin`, payload)
+  return res.data
+}
+
+export const useSignin = () => {
+  return useMutation(
+    apiSignin
   )
 }

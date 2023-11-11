@@ -23,7 +23,7 @@ import {
 import {useWriteReview, useFetchChannel, useSearch, useFetchReviews} from "../../api/apis";
 import _ from "lodash"
 import {useNavigate, useParams} from "react-router-dom";
-import SideNav from "../../layout/SideNav/SideNav";
+import SideNav from "../../layout/SideNav";
 
 const PositiveStar = ({onClick}: { onClick?: VoidFunction }) => (
   <EuiIcon type="starFilled" onClick={onClick} style={{"color": "#fec514"}}/>)

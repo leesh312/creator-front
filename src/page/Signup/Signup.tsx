@@ -18,7 +18,7 @@ import React, {FormEvent, useRef, useState} from "react";
 import {useSignupAdvertiser} from "../../api/apis";
 import {useNavigate} from "react-router-dom";
 
-const Join = () => {
+const Signup = () => {
   const navigate = useNavigate();
   const { mutate: signupMutate } = useSignupAdvertiser()
 
@@ -184,13 +184,13 @@ const Join = () => {
           <EuiFormRow label="직책">
             <EuiFieldText name="position" value={position} onChange={(e) => {
               setPosition(e.target.value)
-            }} placeholder=""/>
+            }} placeholder="(선택)"/>
           </EuiFormRow>
 
           <EuiFormRow label="담당자 번호">
             <EuiFieldText name="phone" value={phone} onChange={(e) => {
               setPhone(e.target.value)
-            }} placeholder="01011112222"/>
+            }} placeholder="- 없이 입력"/>
           </EuiFormRow>
 
           <EuiSpacer size="xl"/>
@@ -216,4 +216,4 @@ const Join = () => {
   )
 }
 
-export default Join
+export default Signup

@@ -5,21 +5,29 @@ import App from './App';
 import {EuiProvider} from '@elastic/eui';
 import axios from "axios";
 import {QueryClient, QueryClientProvider} from "react-query";
+import AuthorizationHelper from "./util/LoginAuthHelper";
 
 
 const initAxios = () => {
   axios.defaults.baseURL = `${process.env.REACT_APP_SERVER}`
+
+  const authorization = AuthorizationHelper.getToken()
+  if (authorization) {
+    axios.defaults.headers.Authorization = authorization
+  }
+
   axios.interceptors.response.use(async (res) => {
-      if (res.headers.authorization) {
-        // const newAccessToken = res?.headers?.authorization;
-        // LoginAuthHelper.setToken(newAccessToken)
+    const authorization = res.headers.authorization
+      if (authorization) {
+        axios.defaults.headers.Authorization = authorization
+        AuthorizationHelper.setToken(authorization)
       }
       return res
     },
     (error) => {
       if (error.response?.status === 401) {
         window.alert("인증이 만료되었습니다.")
-        // LoginAuthHelper.removeToken()
+        AuthorizationHelper.removeToken()
         window.location.href = "/"
         return Promise.resolve()
       }
@@ -35,7 +43,6 @@ const initAxios = () => {
       }
       return Promise.reject(error)
     })
-  // LoginAuthHelper.initFromLocalStorage()
 }
 
 initAxios()

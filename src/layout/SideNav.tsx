@@ -1,7 +1,9 @@
 import {EuiIcon, EuiPageSidebar, EuiSideNav, slugify} from "@elastic/eui";
 import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const SideNav = () => {
+  const navigate = useNavigate();
   const [isSideNavOpenOnMobile, setIsSideNavOpenOnMobile] = useState(false);
   const [selectedItemName, setSelectedItem] = useState("");
 
@@ -13,7 +15,6 @@ const SideNav = () => {
     setSelectedItem(name);
   };
   const createItem = (name: string, data = {}) => {
-    // NOTE: Duplicate `name` values will cause `id` collisions.
     return {
       id: slugify(name),
       name,
@@ -24,9 +25,9 @@ const SideNav = () => {
   };
 
   const sideNav = [
-    createItem('인플루언서 찾기', {
+    createItem('대시보드', {
       key: 'a',
-      onClick: undefined,
+      onClick: () => { navigate("/dashboard") },
       icon: <EuiIcon type="logoElasticsearch"/>,
     }),
     createItem('분야별 인플루언서', {
