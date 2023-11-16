@@ -53,7 +53,7 @@ function YoutubeChannelDetail() {
     const {summary, text1, score1, text2, score2, text3, score3, text4, score4} = data
 
     const payload: WriteReviewRequest = {
-      target: 1,
+      target: Number(channelId),
       evalSummary: summary,
       evalText1: text1,
       evalScore1: score1,
