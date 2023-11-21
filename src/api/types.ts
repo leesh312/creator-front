@@ -45,4 +45,27 @@ interface SearchChannelResponseItem {
   thumbnailUrl: string
   followerCount: number
   contentsCount: number
+  videoSummary?: VideoSummaryResponse
+}
+
+interface VideoSummaryResponse {
+  recentVideos: VideoSummaryResponseItem[]
+  popularVideos: VideoSummaryResponseItem[]
+  recentAdVideos: VideoSummaryResponseItem[]
+  popularAdVideos: VideoSummaryResponseItem[]
+}
+
+interface VideoSummaryResponseItem {
+  title: string,
+  videoKey: string,
+  videoType?: string,
+  adType: string,
+  category?: string,
+  viewCount: number,
+  likeCount: number,
+  commentCount?: number,
+  tags?: string,
+  duration?: string,
+  thumbnailUrl: string,
+  publishedAt?: Date,
 }

@@ -25,6 +25,8 @@ import _ from "lodash"
 import {useNavigate, useParams} from "react-router-dom";
 import SideNav from "../../layout/SideNav";
 import axios from "axios";
+import VideoItem from "../../component/VideoItem";
+import {parseCount} from "../../util/utils";
 
 const PositiveStar = ({onClick}: { onClick?: VoidFunction }) => (
   <EuiIcon type="starFilled" onClick={onClick} style={{"color": "#fec514"}}/>)
@@ -40,10 +42,6 @@ function YoutubeChannelDetail() {
   const {data: channelData} = useFetchChannel(Number(channelId))
   const {mutate: writeReviewMutate} = useWriteReview()
   const {data: reviews} = useFetchReviews(channelId)
-
-
-  console.log("reviews", reviews)
-
 
   const onSubmitReview = (data: ReviewWriteFormData) => {
     if (!verifySubmitData(data)) {
@@ -189,7 +187,7 @@ function YoutubeChannelDetail() {
           <EuiFlexGroup>
             <EuiFlexItem>
               <EuiStat
-                title={channelData?.followerCount || "0"}
+                title={parseCount(Number(channelData?.followerCount)) || "0"}
                 description="구독자 수"
                 textAlign="left"
               />
@@ -205,41 +203,176 @@ function YoutubeChannelDetail() {
 
           <EuiSpacer size="xl"/>
 
-          <EuiTitle size="xs">
-            <h3>리뷰</h3>
-          </EuiTitle>
-          <EuiSpacer size="xs"/>
-          {reviews?.map((review) => (
-            <>
-              <EuiCard
-                textAlign="left"
-                title={""}
-                titleSize="xs"
-                hasBorder
-              >
-                {!!review.evalSummary && (
-                  <>
-                    {review.evalSummary}
-                    <EuiSpacer/>
-                  </>
-                )}
-                <EuiDescriptionList
-                  type="column"
-                  align={"left"}
-                  compressed
-                  listItems={createReviewValues(review)}
-                />
-              </EuiCard>
-              <EuiSpacer/>
-            </>
-          ))}
+          <EuiSpacer size="xl"/>
           <EuiTitle size="s">
-            <h3>리뷰작성</h3>
+            <h3>최근 동영상</h3>
           </EuiTitle>
-          <EuiSpacer size="m"/>
-          <ReviewWriteForm
-            onSubmit={onSubmitReview}
-          />
+          <EuiSpacer size="s"/>
+
+          <EuiFlexGroup
+            wrap
+            gutterSize="s"
+          >
+            { channelData&& channelData.videoSummary?.recentVideos?.map((item) => {
+              return (
+                <EuiFlexItem
+                  grow={false}
+                  onClick={() => { navigate(`/channels/${channelId}`) }}
+                  style={{ cursor: "pointer" }}
+                >
+                  <VideoItem
+                    channelThumbnail={""}
+                    videoThumbnail={item.thumbnailUrl}
+                    videoTitle={item.title}
+                    viewCount={item.viewCount}
+                    publishedAt={item.publishedAt?.toString() || ""}
+                    showChannelAvatar={false}
+                  />
+                </EuiFlexItem>
+              )
+            })}
+          </EuiFlexGroup>
+
+          <EuiSpacer size="xl"/>
+          <EuiTitle size="s">
+            <h3>인기 동영상</h3>
+          </EuiTitle>
+          <EuiSpacer size="s"/>
+
+          <EuiFlexGroup
+            wrap
+            gutterSize="s"
+          >
+            { channelData&& channelData.videoSummary?.popularVideos?.map((item) => {
+              return (
+                <EuiFlexItem
+                  grow={false}
+                  onClick={() => { navigate(`/channels/${channelId}`) }}
+                  style={{ cursor: "pointer" }}
+                >
+                  <VideoItem
+                    channelThumbnail={""}
+                    videoThumbnail={item.thumbnailUrl}
+                    videoTitle={item.title}
+                    viewCount={item.viewCount}
+                    publishedAt={item.publishedAt?.toString() || ""}
+                    showChannelAvatar={false}
+                  />
+                </EuiFlexItem>
+              )
+            })}
+          </EuiFlexGroup>
+
+          <EuiSpacer size="xl"/>
+          <EuiTitle size="s">
+            <h3>최근 광고 동영상</h3>
+          </EuiTitle>
+          <EuiSpacer size="s"/>
+
+          <EuiFlexGroup
+            wrap
+            gutterSize="s"
+          >
+            { channelData&& channelData.videoSummary?.recentAdVideos?.map((item) => {
+              return (
+                <EuiFlexItem
+                  grow={false}
+                  onClick={() => { navigate(`/channels/${channelId}`) }}
+                  style={{ cursor: "pointer" }}
+                >
+                  <VideoItem
+                    channelThumbnail={""}
+                    videoThumbnail={item.thumbnailUrl}
+                    videoTitle={item.title}
+                    viewCount={item.viewCount}
+                    publishedAt={item.publishedAt?.toString() || ""}
+                    showChannelAvatar={false}
+                  />
+                </EuiFlexItem>
+              )
+            })}
+          </EuiFlexGroup>
+
+          <EuiSpacer size="xl"/>
+          <EuiTitle size="s">
+            <h3>인기 광고 동영상</h3>
+          </EuiTitle>
+          <EuiSpacer size="s"/>
+
+          <EuiFlexGroup
+            wrap
+            gutterSize="s"
+          >
+            { channelData&& channelData.videoSummary?.popularAdVideos?.map((item) => {
+              return (
+                <EuiFlexItem
+                  grow={false}
+                  onClick={() => { navigate(`/channels/${channelId}`) }}
+                  style={{ cursor: "pointer" }}
+                >
+                  <VideoItem
+                    channelThumbnail={""}
+                    videoThumbnail={item.thumbnailUrl}
+                    videoTitle={item.title}
+                    viewCount={item.viewCount}
+                    publishedAt={item.publishedAt?.toString() || ""}
+                    showChannelAvatar={false}
+                  />
+                </EuiFlexItem>
+              )
+            })}
+          </EuiFlexGroup>
+
+          <EuiSpacer size="xl"/>
+          <EuiSpacer size="xl"/>
+
+          <div style={{ width: "600px" }}>
+            <EuiTitle size="s">
+              <h3>리뷰</h3>
+            </EuiTitle>
+            <EuiSpacer size="xs"/>
+            {reviews?.map((review) => (
+              <>
+                <EuiCard
+                  textAlign="left"
+                  title={""}
+                  titleSize="xs"
+                  hasBorder
+                >
+                  {!!review.evalSummary && (
+                    <>
+                      {review.evalSummary}
+                      <EuiSpacer/>
+                    </>
+                  )}
+                  <EuiDescriptionList
+                    type="column"
+                    align={"left"}
+                    compressed
+                    listItems={createReviewValues(review)}
+                  />
+                </EuiCard>
+                <EuiSpacer/>
+              </>
+            ))}
+            { reviews !== undefined && reviews.length === 0 && (
+              <>
+                <EuiSpacer size="m"/>
+                <div>등록된 리뷰가 없습니다</div>
+                <EuiSpacer size="xl"/>
+              </>
+            )}
+
+            <EuiSpacer size="xl"/>
+
+            <EuiTitle size="s">
+              <h3>리뷰작성</h3>
+            </EuiTitle>
+            <EuiSpacer size="m"/>
+            <ReviewWriteForm
+              onSubmit={onSubmitReview}
+            />
+          </div>
         </EuiPageSection>
       </EuiPageBody>
     </>

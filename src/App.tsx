@@ -9,6 +9,12 @@ import {EuiPage} from "@elastic/eui";
 import SignupComplete from "./page/SignupComplete/SignupComplete";
 import Signin from "./page/Signin/Signin";
 import Dashboard from "./page/Dashboard/Dashboard";
+import dayjs from "dayjs";
+import relativeTime from 'dayjs/plugin/relativeTime'
+import "dayjs/locale/ko"
+
+dayjs.extend(relativeTime)
+dayjs.locale("ko")
 
 function App() {
   return (

@@ -13,6 +13,7 @@ import {
 import React, {useRef, useState} from "react";
 import {useSignin} from "../../api/apis";
 import {useNavigate} from "react-router-dom";
+import VideoItem from "../../component/VideoItem";
 
 const drinkCategory = [
   {
@@ -71,46 +72,14 @@ const Dashboard = () => {
                 onClick={() => { navigate(`/channels/1`) }}
                 style={{ cursor: "pointer" }}
               >
-                <img
-                  src={item.videoThumbnail}
-                  width="246"
-                  height="138"
-                  alt=""
+                <VideoItem
+                  channelThumbnail={item.channelThumbnail}
+                  videoThumbnail={item.videoThumbnail}
+                  videoTitle={item.videoTitle}
+                  viewCount={123}
+                  publishedAt={Date()}
+                  showChannelAvatar={true}
                 />
-                <EuiSpacer size="s"/>
-                <EuiFlexGroup
-                  gutterSize="s"
-                  alignItems="center"
-                >
-                  <EuiFlexItem
-                    grow={false}
-                  >
-                    <img
-                      src={item.channelThumbnail}
-                      style={{width: "40px", height: "40px", borderRadius: "20px"}}
-                    />
-                  </EuiFlexItem>
-                  <EuiFlexItem>
-                    <div style={{
-                      lineHeight: "1.2em",
-                      fontWeight: "bold",
-                      height: "2.4em",
-                      width: "180px",
-                      overflow: "hidden"
-                    }}>
-                      {item.videoTitle}
-                    </div>
-                    <div style={{
-                      marginTop: "8px",
-                      fontSize: "0.9em",
-                      color: "#777"}
-                    }>
-                      <span>조회수 123회</span>
-                      <span style={{margin: "0 4px"}}>·</span>
-                      <span>3일전</span>
-                    </div>
-                  </EuiFlexItem>
-                </EuiFlexGroup>
               </EuiFlexItem>
             )
           })}
