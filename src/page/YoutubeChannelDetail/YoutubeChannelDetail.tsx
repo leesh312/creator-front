@@ -215,20 +215,24 @@ function YoutubeChannelDetail() {
           >
             { channelData&& channelData.videoSummary?.recentVideos?.map((item) => {
               return (
-                <EuiFlexItem
-                  grow={false}
-                  onClick={() => { navigate(`/channels/${channelId}`) }}
-                  style={{ cursor: "pointer" }}
+                <a
+                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
+                  target="_blank"
                 >
-                  <VideoItem
-                    channelThumbnail={""}
-                    videoThumbnail={item.thumbnailUrl}
-                    videoTitle={item.title}
-                    viewCount={item.viewCount}
-                    publishedAt={item.publishedAt?.toString() || ""}
-                    showChannelAvatar={false}
-                  />
-                </EuiFlexItem>
+                  <EuiFlexItem
+                    grow={false}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <VideoItem
+                      channelThumbnail={""}
+                      videoThumbnail={item.thumbnailUrl}
+                      videoTitle={item.title}
+                      viewCount={item.viewCount}
+                      publishedAt={item.publishedAt?.toString() || ""}
+                      showChannelAvatar={false}
+                    />
+                  </EuiFlexItem>
+                </a>
               )
             })}
           </EuiFlexGroup>
@@ -245,20 +249,25 @@ function YoutubeChannelDetail() {
           >
             { channelData&& channelData.videoSummary?.popularVideos?.map((item) => {
               return (
-                <EuiFlexItem
-                  grow={false}
-                  onClick={() => { navigate(`/channels/${channelId}`) }}
-                  style={{ cursor: "pointer" }}
+                <a
+                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
+                  target="_blank"
                 >
-                  <VideoItem
-                    channelThumbnail={""}
-                    videoThumbnail={item.thumbnailUrl}
-                    videoTitle={item.title}
-                    viewCount={item.viewCount}
-                    publishedAt={item.publishedAt?.toString() || ""}
-                    showChannelAvatar={false}
-                  />
-                </EuiFlexItem>
+                  <EuiFlexItem
+                    grow={false}
+                    onClick={() => { navigate(`/channels/${channelId}`) }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <VideoItem
+                      channelThumbnail={""}
+                      videoThumbnail={item.thumbnailUrl}
+                      videoTitle={item.title}
+                      viewCount={item.viewCount}
+                      publishedAt={item.publishedAt?.toString() || ""}
+                      showChannelAvatar={false}
+                    />
+                  </EuiFlexItem>
+                </a>
               )
             })}
           </EuiFlexGroup>
@@ -275,20 +284,25 @@ function YoutubeChannelDetail() {
           >
             { channelData&& channelData.videoSummary?.recentAdVideos?.map((item) => {
               return (
-                <EuiFlexItem
-                  grow={false}
-                  onClick={() => { navigate(`/channels/${channelId}`) }}
-                  style={{ cursor: "pointer" }}
+                <a
+                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
+                  target="_blank"
                 >
-                  <VideoItem
-                    channelThumbnail={""}
-                    videoThumbnail={item.thumbnailUrl}
-                    videoTitle={item.title}
-                    viewCount={item.viewCount}
-                    publishedAt={item.publishedAt?.toString() || ""}
-                    showChannelAvatar={false}
-                  />
-                </EuiFlexItem>
+                  <EuiFlexItem
+                    grow={false}
+                    onClick={() => { navigate(`/channels/${channelId}`) }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <VideoItem
+                      channelThumbnail={""}
+                      videoThumbnail={item.thumbnailUrl}
+                      videoTitle={item.title}
+                      viewCount={item.viewCount}
+                      publishedAt={item.publishedAt?.toString() || ""}
+                      showChannelAvatar={false}
+                    />
+                  </EuiFlexItem>
+                </a>
               )
             })}
           </EuiFlexGroup>
@@ -305,20 +319,25 @@ function YoutubeChannelDetail() {
           >
             { channelData&& channelData.videoSummary?.popularAdVideos?.map((item) => {
               return (
-                <EuiFlexItem
-                  grow={false}
-                  onClick={() => { navigate(`/channels/${channelId}`) }}
-                  style={{ cursor: "pointer" }}
+                <a
+                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
+                  target="_blank"
                 >
-                  <VideoItem
-                    channelThumbnail={""}
-                    videoThumbnail={item.thumbnailUrl}
-                    videoTitle={item.title}
-                    viewCount={item.viewCount}
-                    publishedAt={item.publishedAt?.toString() || ""}
-                    showChannelAvatar={false}
-                  />
-                </EuiFlexItem>
+                  <EuiFlexItem
+                    grow={false}
+                    onClick={() => { navigate(`/channels/${channelId}`) }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <VideoItem
+                      channelThumbnail={""}
+                      videoThumbnail={item.thumbnailUrl}
+                      videoTitle={item.title}
+                      viewCount={item.viewCount}
+                      publishedAt={item.publishedAt?.toString() || ""}
+                      showChannelAvatar={false}
+                    />
+                  </EuiFlexItem>
+                </a>
               )
             })}
           </EuiFlexGroup>
