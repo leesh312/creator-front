@@ -16,13 +16,14 @@ interface VideoItemProps {
 const VideoItem = (props: VideoItemProps) => {
   return (
     <div
-      style={{ "width": "260px" }}
+      style={{ "width": "220px" }}
     >
       <img
         src={props.videoThumbnail}
-        width="246"
-        height="138"
+        width="220"
+        height="124"
         alt=""
+        style={{ "borderRadius": "4px" }}
       />
       <EuiSpacer size="s"/>
       <EuiFlexGroup
@@ -56,12 +57,18 @@ const VideoItem = (props: VideoItemProps) => {
             color: "#777"}
           }>
             <span>조회수 {parseCount(props.viewCount)}회</span>
-            <span style={{margin: "0 4px"}}>·</span>
+            <Dot />
             <span>{dayjs(props.publishedAt).fromNow()}</span>
           </div>
         </EuiFlexItem>
       </EuiFlexGroup>
     </div>
+  )
+}
+
+export const Dot = () => {
+  return (
+    <span style={{margin: "0 4px"}}>·</span>
   )
 }
 

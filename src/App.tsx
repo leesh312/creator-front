@@ -22,7 +22,7 @@ function App() {
       <Header />
       <EuiPage
         paddingSize="none"
-        restrictWidth="1680px"
+        restrictWidth="1480px"
         grow
       >
         <SideNav />

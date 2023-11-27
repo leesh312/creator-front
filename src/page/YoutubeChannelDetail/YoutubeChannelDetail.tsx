@@ -19,19 +19,18 @@ import {
   EuiDescribedFormGroup,
   EuiButton,
   EuiFormRow,
+  EuiTextColor,
 } from "@elastic/eui";
 import {useWriteReview, useFetchChannel, useSearch, useFetchReviews} from "../../api/apis";
 import _ from "lodash"
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import SideNav from "../../layout/SideNav";
 import axios from "axios";
 import VideoItem from "../../component/VideoItem";
 import {parseCount} from "../../util/utils";
-
-const PositiveStar = ({onClick}: { onClick?: VoidFunction }) => (
-  <EuiIcon type="starFilled" onClick={onClick} style={{"color": "#fec514"}}/>)
-const NegativeStar = ({onClick}: { onClick?: VoidFunction }) => (
-  <EuiIcon type="starFilled" onClick={onClick} style={{"color": "#abb4c4"}}/>)
+import ChannelSummaryStats from "./ChannelSummaryStats";
+import ChannelDetailReviews, {NegativeStar, PositiveStar} from "./ChannelDetailReviews";
+import ChannelHeader from "./ChannelHeader";
 
 function YoutubeChannelDetail() {
   const navigate = useNavigate();
@@ -82,138 +81,181 @@ function YoutubeChannelDetail() {
     return true
   }
 
-  const renderStars = (score?: number, onClick?: VoidFunction) => {
-    return [1, 2, 3, 4, 5].map((i) => {
-      const value = !!score && score >= i
-      return value ? <PositiveStar onClick={onClick}/> : <NegativeStar onClick={onClick}/>
-    })
-  }
-
-  const createReviewValues = (review: Review): Array<{
-    title: NonNullable<ReactNode>;
-    description: NonNullable<ReactNode>;
-  }> => {
-
-    return [
-      {
-        title: '커뮤니케이션',
-        description: <>
-          <div>
-            {renderStars(review.evalScore1)}
-          </div>
-          {!!review.evalText1 && (
-            <>
-              <EuiSpacer size="s"/>
-              <div>
-                {review.evalText1}
-              </div>
-            </>
-          )}
-        </>,
-      },
-      {
-        title: '제품 이해도',
-        description: <>
-          <div>
-            {renderStars(review.evalScore2)}
-          </div>
-          {!!review.evalText2 && (
-            <>
-              <EuiSpacer size="s"/>
-              <div>
-                {review.evalText2}
-              </div>
-            </>
-          )}
-        </>,
-      },
-      {
-        title: '피드백 수용도',
-        description: <>
-          <div>
-            {renderStars(review.evalScore3)}
-          </div>
-          {!!review.evalText3 && (
-            <>
-              <EuiSpacer size="s"/>
-              <div>
-                {review.evalText3}
-              </div>
-            </>
-          )}
-        </>,
-      },
-      {
-        title: '광고효율',
-        description: <>
-          <div>
-            {renderStars(review.evalScore4)}
-          </div>
-          {!!review.evalText4 && (
-            <>
-              <EuiSpacer size="s"/>
-              <div>
-                {review.evalText4}
-              </div>
-            </>
-          )}
-        </>,
-      },
-    ]
-  }
   return (
     <>
-      <EuiPageBody paddingSize="none" panelled>
+      <EuiPageBody
+        paddingSize="m"
+        panelled
+        restrictWidth
+      >
         <EuiPageSection>
-          <EuiFlexGroup>
-            <EuiFlexItem
-              grow={false}
-            >
-              <EuiAvatar
-                size="xl"
-                name=""
-                imageUrl={channelData?.thumbnailUrl || ""}
-              />
-            </EuiFlexItem>
-            <EuiFlexItem>
-              <EuiTitle size="m">
-                <h3>{channelData?.name}</h3>
-              </EuiTitle>
-            </EuiFlexItem>
-            <EuiFlexItem>
-            </EuiFlexItem>
-          </EuiFlexGroup>
+          <ChannelHeader
+            channelData={channelData}
+          />
+
           <EuiSpacer/>
+
+          <ChannelSummaryStats
+            channelData={channelData}
+          />
+
+          <EuiSpacer size="xl"/>
+          <EuiSpacer size="xl"/>
+
+          <div style={{width: "600px"}}>
+            <ChannelDetailReviews
+              reviews={reviews}
+            />
+          </div>
+
+          <EuiSpacer size="xl"/>
+          <EuiSpacer size="xl"/>
+
+          <EuiTitle size="s">
+            <h3>
+              콜라보 제안
+            </h3>
+          </EuiTitle>
+
+          <EuiSpacer size="m"/>
+
           <EuiFlexGroup>
             <EuiFlexItem>
               <EuiStat
-                title={parseCount(Number(channelData?.followerCount)) || "0"}
-                description="구독자 수"
+                title="브랜디드"
+                titleSize="s"
+                description={
+                  <EuiTextColor color="success">
+                  <span>
+                    OPEN
+                  </span>
+                  </EuiTextColor>
+                }
                 textAlign="left"
-              />
+              >
+                <EuiTextColor color="subdued">
+                  <EuiSpacer size="s"/>
+                  <div>
+                    <EuiIcon type="play" />
+                    {" "}
+                    영상 1개
+                  </div>
+                  <EuiSpacer size="xs"/>
+                  <div>
+                    <EuiIcon type="pin" />
+                    {" "}
+                    브랜드/제품 집중 광고
+                  </div>
+                  <EuiSpacer size="xs"/>
+                  <div>
+                    <EuiIcon type="clock" />
+                    {" "}
+                    전체 영상의 50% 내외 노출
+                  </div>
+                </EuiTextColor>
+                <EuiSpacer size="s"/>
+                <Link to={"#"}>제안하기</Link>
+              </EuiStat>
             </EuiFlexItem>
             <EuiFlexItem>
               <EuiStat
-                title={channelData?.contentsCount || "0"}
-                description="동영상"
+                title="PPL"
+                titleSize="s"
+                description={
+                  <EuiTextColor color="success">
+                  <span>
+                    OPEN
+                  </span>
+                  </EuiTextColor>
+                }
                 textAlign="left"
-              />
+              >
+                <EuiTextColor color="subdued">
+                  <EuiSpacer size="s"/>
+                  <div>
+                    <EuiIcon type="play" />
+                    {" "}
+                    영상 1개
+                  </div>
+                  <EuiSpacer size="xs"/>
+                  <div>
+                    <EuiIcon type="pin" />
+                    {" "}
+                    브랜드/제품 집중 광고
+                  </div>
+                  <EuiSpacer size="xs"/>
+                  <div>
+                    <EuiIcon type="clock" />
+                    {" "}
+                    제품 당 1-2분 노출
+                  </div>
+                </EuiTextColor>
+                <EuiSpacer size="s"/>
+                <Link to={"#"}>제안하기</Link>
+              </EuiStat>
+            </EuiFlexItem>
+            <EuiFlexItem>
+              <EuiStat
+                title="오프라인 행사"
+                titleSize="s"
+                titleColor="subdued"
+                description={
+                  <EuiTextColor color="danger">
+                  <span>
+                    CLOSED
+                  </span>
+                  </EuiTextColor>
+                }
+                textAlign="left"
+              >
+                <EuiTextColor color="subdued">
+                  <EuiSpacer size="s"/>
+                  <div>
+                    <EuiIcon type="play" />
+                    {" "}
+                    오프라인 행사 1회
+                  </div>
+                  <EuiSpacer size="xs"/>
+                  <div>
+                    <EuiIcon type="pin" />
+                    {" "}
+                    브랜드/제품 현장 구매전환율 증대
+                  </div>
+                </EuiTextColor>
+              </EuiStat>
+            </EuiFlexItem>
+            <EuiFlexItem>
+              <EuiStat
+                title="기타 제안"
+                titleSize="s"
+                titleColor="subdued"
+                description={
+                  <EuiTextColor color="danger">
+                  <span>
+                    CLOSED
+                  </span>
+                  </EuiTextColor>
+                }
+                textAlign="left"
+              >
+              </EuiStat>
             </EuiFlexItem>
           </EuiFlexGroup>
 
           <EuiSpacer size="xl"/>
+          <EuiSpacer size="m"/>
 
-          <EuiSpacer size="xl"/>
           <EuiTitle size="s">
             <h3>최근 동영상</h3>
           </EuiTitle>
-          <EuiSpacer size="s"/>
+
+          <EuiSpacer size="m"/>
 
           <EuiFlexGroup
             wrap
-            gutterSize="s"
+            gutterSize="m"
           >
-            { channelData&& channelData.videoSummary?.recentVideos?.map((item) => {
+            {channelData && channelData.videoSummary?.recentVideos?.map((item) => {
               return (
                 <a
                   href={`https://www.youtube.com/watch?v=${item.videoKey}`}
@@ -221,7 +263,7 @@ function YoutubeChannelDetail() {
                 >
                   <EuiFlexItem
                     grow={false}
-                    style={{ cursor: "pointer" }}
+                    style={{cursor: "pointer"}}
                   >
                     <VideoItem
                       channelThumbnail={""}
@@ -238,16 +280,19 @@ function YoutubeChannelDetail() {
           </EuiFlexGroup>
 
           <EuiSpacer size="xl"/>
+          <EuiSpacer size="m"/>
+
           <EuiTitle size="s">
             <h3>인기 동영상</h3>
           </EuiTitle>
-          <EuiSpacer size="s"/>
+
+          <EuiSpacer size="m"/>
 
           <EuiFlexGroup
             wrap
-            gutterSize="s"
+            gutterSize="m"
           >
-            { channelData&& channelData.videoSummary?.popularVideos?.map((item) => {
+            {channelData && channelData.videoSummary?.popularVideos?.map((item) => {
               return (
                 <a
                   href={`https://www.youtube.com/watch?v=${item.videoKey}`}
@@ -255,8 +300,10 @@ function YoutubeChannelDetail() {
                 >
                   <EuiFlexItem
                     grow={false}
-                    onClick={() => { navigate(`/channels/${channelId}`) }}
-                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      navigate(`/channels/${channelId}`)
+                    }}
+                    style={{cursor: "pointer"}}
                   >
                     <VideoItem
                       channelThumbnail={""}
@@ -273,117 +320,124 @@ function YoutubeChannelDetail() {
           </EuiFlexGroup>
 
           <EuiSpacer size="xl"/>
-          <EuiTitle size="s">
-            <h3>최근 광고 동영상</h3>
-          </EuiTitle>
-          <EuiSpacer size="s"/>
+          <EuiSpacer size="m"/>
 
           <EuiFlexGroup
-            wrap
-            gutterSize="s"
+            gutterSize="xs"
           >
-            { channelData&& channelData.videoSummary?.recentAdVideos?.map((item) => {
-              return (
-                <a
-                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
-                  target="_blank"
-                >
-                  <EuiFlexItem
-                    grow={false}
-                    onClick={() => { navigate(`/channels/${channelId}`) }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <VideoItem
-                      channelThumbnail={""}
-                      videoThumbnail={item.thumbnailUrl}
-                      videoTitle={item.title}
-                      viewCount={item.viewCount}
-                      publishedAt={item.publishedAt?.toString() || ""}
-                      showChannelAvatar={false}
-                    />
-                  </EuiFlexItem>
-                </a>
-              )
-            })}
-          </EuiFlexGroup>
-
-          <EuiSpacer size="xl"/>
-          <EuiTitle size="s">
-            <h3>인기 광고 동영상</h3>
-          </EuiTitle>
-          <EuiSpacer size="s"/>
-
-          <EuiFlexGroup
-            wrap
-            gutterSize="s"
-          >
-            { channelData&& channelData.videoSummary?.popularAdVideos?.map((item) => {
-              return (
-                <a
-                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
-                  target="_blank"
-                >
-                  <EuiFlexItem
-                    grow={false}
-                    onClick={() => { navigate(`/channels/${channelId}`) }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <VideoItem
-                      channelThumbnail={""}
-                      videoThumbnail={item.thumbnailUrl}
-                      videoTitle={item.title}
-                      viewCount={item.viewCount}
-                      publishedAt={item.publishedAt?.toString() || ""}
-                      showChannelAvatar={false}
-                    />
-                  </EuiFlexItem>
-                </a>
-              )
-            })}
-          </EuiFlexGroup>
-
-          <EuiSpacer size="xl"/>
-          <EuiSpacer size="xl"/>
-
-          <div style={{ width: "600px" }}>
             <EuiTitle size="s">
-              <h3>리뷰</h3>
+              <h3>
+                최근 광고 동영상
+              </h3>
             </EuiTitle>
-            <EuiSpacer size="xs"/>
-            {reviews?.map((review) => (
-              <>
-                <EuiCard
-                  textAlign="left"
-                  title={""}
-                  titleSize="xs"
-                  hasBorder
+
+            <span
+              style={{
+                "fontWeight": "700",
+                "fontSize": "14px",
+                "padding": "4px 8px",
+                "backgroundColor": "#eaeaea",
+                "borderRadius": "6px",
+              }}
+            >
+                AD
+              </span>
+          </EuiFlexGroup>
+
+          <EuiSpacer size="m"/>
+
+          <EuiFlexGroup
+            wrap
+            gutterSize="m"
+          >
+            {channelData && channelData.videoSummary?.recentAdVideos?.map((item) => {
+              return (
+                <a
+                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
+                  target="_blank"
                 >
-                  {!!review.evalSummary && (
-                    <>
-                      {review.evalSummary}
-                      <EuiSpacer/>
-                    </>
-                  )}
-                  <EuiDescriptionList
-                    type="column"
-                    align={"left"}
-                    compressed
-                    listItems={createReviewValues(review)}
-                  />
-                </EuiCard>
-                <EuiSpacer/>
-              </>
-            ))}
-            { reviews !== undefined && reviews.length === 0 && (
-              <>
-                <EuiSpacer size="m"/>
-                <div>등록된 리뷰가 없습니다</div>
-                <EuiSpacer size="xl"/>
-              </>
-            )}
+                  <EuiFlexItem
+                    grow={false}
+                    onClick={() => {
+                      navigate(`/channels/${channelId}`)
+                    }}
+                    style={{cursor: "pointer"}}
+                  >
+                    <VideoItem
+                      channelThumbnail={""}
+                      videoThumbnail={item.thumbnailUrl}
+                      videoTitle={item.title}
+                      viewCount={item.viewCount}
+                      publishedAt={item.publishedAt?.toString() || ""}
+                      showChannelAvatar={false}
+                    />
+                  </EuiFlexItem>
+                </a>
+              )
+            })}
+          </EuiFlexGroup>
 
-            <EuiSpacer size="xl"/>
+          <EuiSpacer size="xl"/>
+          <EuiSpacer size="m"/>
 
+          <EuiFlexGroup
+            gutterSize="xs"
+          >
+            <EuiTitle size="s">
+              <h3>
+                인기 광고 동영상
+              </h3>
+            </EuiTitle>
+            <span
+              style={{
+                "fontWeight": "700",
+                "fontSize": "14px",
+                "padding": "4px 8px",
+                "backgroundColor": "#eaeaea",
+                "borderRadius": "6px",
+              }}
+            >
+              AD
+            </span>
+          </EuiFlexGroup>
+
+          <EuiSpacer size="m"/>
+
+          <EuiFlexGroup
+            wrap
+            gutterSize="m"
+          >
+            {channelData && channelData.videoSummary?.popularAdVideos?.map((item) => {
+              return (
+                <a
+                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
+                  target="_blank"
+                >
+                  <EuiFlexItem
+                    grow={false}
+                    onClick={() => {
+                      navigate(`/channels/${channelId}`)
+                    }}
+                    style={{cursor: "pointer"}}
+                  >
+                    <VideoItem
+                      channelThumbnail={""}
+                      videoThumbnail={item.thumbnailUrl}
+                      videoTitle={item.title}
+                      viewCount={item.viewCount}
+                      publishedAt={item.publishedAt?.toString() || ""}
+                      showChannelAvatar={false}
+                    />
+                  </EuiFlexItem>
+                </a>
+              )
+            })}
+          </EuiFlexGroup>
+
+          <EuiSpacer size="xl"/>
+          <EuiSpacer size="xl"/>
+
+          <div style={{width: "600px"}}>
             <EuiTitle size="s">
               <h3>리뷰작성</h3>
             </EuiTitle>
@@ -410,7 +464,11 @@ interface ReviewWriteFormData {
   score4?: number
 }
 
-const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) => void }) => {
+const ReviewWriteForm = ({
+                           onSubmit
+                         }: {
+  onSubmit?: (data: ReviewWriteFormData) => void
+}) => {
   const navigate = useNavigate();
   const [summary, setSummary] = useState("")
   const [text1, setText1] = useState("")
@@ -431,7 +489,7 @@ const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) =>
 
   const onFocusTextArea = () => {
     const hasAuth = !!axios.defaults.headers.Authorization
-    if(!hasAuth) {
+    if (!hasAuth) {
       window.alert("로그인 후 리뷰를 작성할 수 있습니다")
       navigate("/signin")
     }
@@ -452,10 +510,11 @@ const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) =>
           compressed
         />
       </EuiFormRow>
-      <EuiFormRow label={
-        <>
-          커뮤니케이션
-          <span style={{"verticalAlign": "text-bottom", "marginLeft": "8px"}}>
+      <EuiFormRow
+        label={
+          <>
+            커뮤니케이션
+            <span style={{"verticalAlign": "text-bottom", "marginLeft": "8px"}}>
             {[1, 2, 3, 4, 5].map((i) => {
               const value = !!score1 && score1 >= i
               const onClick = () => {
@@ -464,8 +523,8 @@ const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) =>
               return value ? <PositiveStar onClick={onClick}/> : <NegativeStar onClick={onClick}/>
             })}
           </span>
-        </>
-      } fullWidth>
+          </>
+        } fullWidth>
         <EuiTextArea
           placeholder=""
           aria-label=""
@@ -559,10 +618,13 @@ const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) =>
       <EuiSpacer/>
       <EuiFlexGroup
         responsive={false}
-        gutterSize="s"
+        gutterSize="m"
         alignItems="center"
         justifyContent="flexEnd"
       >
+        <EuiFlexItem grow={false}>
+          채널과의 광고 협업에 대한 리뷰를 객관적인 시각에서 적어주세요
+        </EuiFlexItem>
         <EuiFlexItem grow={false}>
           <EuiButton
             color={undefined}
@@ -576,5 +638,4 @@ const ReviewWriteForm = ({onSubmit}: { onSubmit?: (data: ReviewWriteFormData) =>
     </>
   )
 }
-
 export default YoutubeChannelDetail;
