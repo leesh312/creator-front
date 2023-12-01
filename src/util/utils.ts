@@ -17,3 +17,14 @@ export const parseCount = (count: number) => {
 
   return count
 }
+
+export const parseCountry = (countryCode: string | undefined) => {
+  if (!countryCode) {
+    return "국적 미기재"
+  }
+  switch (countryCode) {
+    case "KR": return "대한민국"
+  }
+
+  return countryCode
+}

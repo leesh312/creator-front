@@ -1,6 +1,7 @@
-import {EuiAvatar, EuiFlexGroup, EuiFlexItem, EuiText, EuiTextColor, EuiTitle} from "@elastic/eui";
+import {EuiAvatar, EuiFlexGroup, EuiFlexItem, EuiSpacer, EuiText, EuiTextColor, EuiTitle} from "@elastic/eui";
 import React from "react";
 import {Dot} from "../../component/VideoItem";
+import {parseCountry} from "../../util/utils";
 
 const ChannelHeader = ({ channelData } : { channelData?: SearchChannelResponseItem }) => {
 
@@ -24,10 +25,14 @@ const ChannelHeader = ({ channelData } : { channelData?: SearchChannelResponseIt
             <h3>{channelData?.name}</h3>
           </EuiTitle>
           <EuiTextColor color="subdued">
-            대한민국
-            <Dot />
-            유튜버
+            {parseCountry(channelData?.country)}
+            <Dot/>
+            #예능 #직업
           </EuiTextColor>
+          <EuiSpacer size="xs" />
+          <pre style={{ background: "#f7f8fc", padding: "12px", borderRadius: "4px", fontSize: "12px", maxHeight: "80px", overflow: "hidden" }}>
+            {channelData?.description}
+          </pre>
         </EuiFlexGroup>
       </EuiFlexItem>
       <EuiFlexItem>

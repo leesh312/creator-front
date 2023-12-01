@@ -269,6 +269,7 @@ function YoutubeChannelDetail() {
                       channelThumbnail={""}
                       videoThumbnail={item.thumbnailUrl}
                       videoTitle={item.title}
+                      commentCount={item.commentCount}
                       viewCount={item.viewCount}
                       publishedAt={item.publishedAt?.toString() || ""}
                       showChannelAvatar={false}
@@ -280,47 +281,6 @@ function YoutubeChannelDetail() {
           </EuiFlexGroup>
 
           <EuiSpacer size="xl"/>
-          <EuiSpacer size="m"/>
-
-          <EuiTitle size="s">
-            <h3>인기 동영상</h3>
-          </EuiTitle>
-
-          <EuiSpacer size="m"/>
-
-          <EuiFlexGroup
-            wrap
-            gutterSize="m"
-          >
-            {channelData && channelData.videoSummary?.popularVideos?.map((item) => {
-              return (
-                <a
-                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
-                  target="_blank"
-                >
-                  <EuiFlexItem
-                    grow={false}
-                    onClick={() => {
-                      navigate(`/channels/${channelId}`)
-                    }}
-                    style={{cursor: "pointer"}}
-                  >
-                    <VideoItem
-                      channelThumbnail={""}
-                      videoThumbnail={item.thumbnailUrl}
-                      videoTitle={item.title}
-                      viewCount={item.viewCount}
-                      publishedAt={item.publishedAt?.toString() || ""}
-                      showChannelAvatar={false}
-                    />
-                  </EuiFlexItem>
-                </a>
-              )
-            })}
-          </EuiFlexGroup>
-
-          <EuiSpacer size="xl"/>
-          <EuiSpacer size="m"/>
 
           <EuiFlexGroup
             gutterSize="xs"
@@ -379,6 +339,45 @@ function YoutubeChannelDetail() {
 
           <EuiSpacer size="xl"/>
           <EuiSpacer size="m"/>
+
+          <EuiTitle size="s">
+            <h3>인기 동영상</h3>
+          </EuiTitle>
+
+          <EuiSpacer size="m"/>
+
+          <EuiFlexGroup
+            wrap
+            gutterSize="m"
+          >
+            {channelData && channelData.videoSummary?.popularVideos?.map((item) => {
+              return (
+                <a
+                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
+                  target="_blank"
+                >
+                  <EuiFlexItem
+                    grow={false}
+                    onClick={() => {
+                      navigate(`/channels/${channelId}`)
+                    }}
+                    style={{cursor: "pointer"}}
+                  >
+                    <VideoItem
+                      channelThumbnail={""}
+                      videoThumbnail={item.thumbnailUrl}
+                      videoTitle={item.title}
+                      viewCount={item.viewCount}
+                      publishedAt={item.publishedAt?.toString() || ""}
+                      showChannelAvatar={false}
+                    />
+                  </EuiFlexItem>
+                </a>
+              )
+            })}
+          </EuiFlexGroup>
+
+          <EuiSpacer size="xl"/>
 
           <EuiFlexGroup
             gutterSize="xs"

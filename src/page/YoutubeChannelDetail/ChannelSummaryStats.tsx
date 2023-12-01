@@ -2,7 +2,7 @@ import {EuiFlexGroup, EuiFlexItem, EuiIcon, EuiStat, EuiTextColor} from "@elasti
 import {parseCount} from "../../util/utils";
 import React from "react";
 
-const ChannelSummaryStats = ({ channelData } : { channelData?: SearchChannelResponseItem }) => {
+const ChannelSummaryStats = ({channelData}: { channelData?: SearchChannelResponseItem }) => {
 
   return (
     <EuiFlexGroup>
@@ -13,9 +13,9 @@ const ChannelSummaryStats = ({ channelData } : { channelData?: SearchChannelResp
           textAlign="left"
         >
           <EuiTextColor color="success">
-                  <span>
-                    한달 3.5% <EuiIcon type="sortUp"/>
-                  </span>
+            <span>
+              한달 3.5% <EuiIcon type="sortUp"/>
+            </span>
           </EuiTextColor>
         </EuiStat>
       </EuiFlexItem>
@@ -26,9 +26,9 @@ const ChannelSummaryStats = ({ channelData } : { channelData?: SearchChannelResp
           textAlign="left"
         >
           <EuiTextColor color="success">
-                  <span>
-                    한달 평균 8.2개
-                  </span>
+            <span>
+              한달 평균 8.2개
+            </span>
           </EuiTextColor>
         </EuiStat>
       </EuiFlexItem>

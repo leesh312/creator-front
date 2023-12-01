@@ -13,7 +13,7 @@ import React, {ReactNode} from "react";
 import {Dot} from "../../component/VideoItem";
 import {Link} from "react-router-dom";
 
-export const ChannelDetailReviews = ({ reviews } : { reviews?: Review[] }) => {
+export const ChannelDetailReviews = ({reviews}: { reviews?: Review[] }) => {
   return (
     <>
       <EuiTitle size="s">
@@ -28,7 +28,7 @@ export const ChannelDetailReviews = ({ reviews } : { reviews?: Review[] }) => {
         <>
           <EuiCard
             textAlign="left"
-            title={review.evalSummary || ""}
+            title={`"${review.evalSummary}"` || ""}
             titleSize="xs"
             paddingSize="m"
           >
@@ -38,7 +38,7 @@ export const ChannelDetailReviews = ({ reviews } : { reviews?: Review[] }) => {
               >
                 <EuiTextColor color="subdued">
                   2023/04 협업
-                  <Dot />
+                  <Dot/>
                   PPL
                 </EuiTextColor>
               </EuiFlexItem>
@@ -85,12 +85,13 @@ const renderStars = (score?: number, onClick?: VoidFunction) => {
   })
 }
 
-const createReviewValues = (review: Review): Array<{
+const createReviewValues = (review: Review): {
   title: NonNullable<ReactNode>;
   description: NonNullable<ReactNode>;
-}> => {
-  return [
-    {
+}[] => {
+  const items = []
+  if (!!review.evalText1 || !!review.evalScore1) {
+    items.push({
       title: '커뮤니케이션',
       description: <>
         <div>
@@ -105,8 +106,11 @@ const createReviewValues = (review: Review): Array<{
           </>
         )}
       </>,
-    },
-    {
+    })
+  }
+
+  if (!!review.evalText2 || !!review.evalScore2) {
+    items.push({
       title: '제품 이해도',
       description: <>
         <div>
@@ -121,8 +125,10 @@ const createReviewValues = (review: Review): Array<{
           </>
         )}
       </>,
-    },
-    {
+    })
+  }
+  if (!!review.evalText3 || !!review.evalScore3) {
+    items.push({
       title: '피드백 수용도',
       description: <>
         <div>
@@ -137,8 +143,11 @@ const createReviewValues = (review: Review): Array<{
           </>
         )}
       </>,
-    },
-    {
+    })
+  }
+
+  if (!!review.evalText4 || !!review.evalScore4) {
+    items.push({
       title: '광고효율',
       description: <>
         <div>
@@ -153,8 +162,9 @@ const createReviewValues = (review: Review): Array<{
           </>
         )}
       </>,
-    },
-  ]
+    })
+  }
+  return items
 }
 
 export default ChannelDetailReviews

@@ -45,6 +45,8 @@ interface SearchChannelResponseItem {
   thumbnailUrl: string
   followerCount: number
   contentsCount: number
+  description: string
+  country?: string
   videoSummary?: VideoSummaryResponse
 }
 

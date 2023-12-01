@@ -9,6 +9,7 @@ interface VideoItemProps {
   videoThumbnail: string
   videoTitle: string
   viewCount: number
+  commentCount?: number
   publishedAt: string
   showChannelAvatar: boolean
 }
@@ -54,11 +55,18 @@ const VideoItem = (props: VideoItemProps) => {
           <div style={{
             marginTop: "8px",
             fontSize: "0.9em",
-            color: "#777"}
+            color: "#777"
+          }
           }>
             <span>조회수 {parseCount(props.viewCount)}회</span>
-            <Dot />
+            <Dot/>
             <span>{dayjs(props.publishedAt).fromNow()}</span>
+            { props.commentCount && props.commentCount > 0 && (
+              <>
+                <Dot/>
+                <span>댓글 {props.commentCount}</span>
+              </>
+            )}
           </div>
         </EuiFlexItem>
       </EuiFlexGroup>
