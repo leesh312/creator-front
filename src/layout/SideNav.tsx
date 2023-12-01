@@ -25,26 +25,47 @@ const SideNav = () => {
   };
 
   const sideNav = [
+    createItem('BDC/PPL/채널', {
+      onClick: undefined,
+      icon: <EuiIcon type="logoElasticStack"/>,
+      items: [
+        createItem('PPL/BDC 모아보기', { key: 'b', }),
+        createItem('웹예능', {
+          onClick: () => { navigate("/categories/웹예능") },
+        }),
+        createItem('음식', {
+          onClick: () => { navigate("/categories/음식") },
+        }),
+        createItem('건강/의학', {
+          onClick: () => { navigate("/categories/건강의학") },
+        }),
+        createItem('도서', {
+          onClick: () => { navigate("/categories/도서") },
+        }),
+        createItem('교육', {
+          onClick: () => { navigate("/categories/교육") },
+        }),
+        createItem('음악', {
+          onClick: () => { navigate("/categories/음악") },
+        }),
+        createItem('영화/드라마', {
+          onClick: () => { navigate("/categories/영화드라마") },
+        }),
+        createItem('운동', {
+          onClick: () => { navigate("/categories/운동") },
+        }),
+        createItem('패션', {
+          onClick: () => { navigate("/categories/패션") },
+        }),
+        createItem('뷰티', {
+          onClick: () => { navigate("/categories/뷰티") },
+        }),
+      ],
+    }),
     createItem('대시보드', {
       key: 'a',
       onClick: () => { navigate("/dashboard") },
       icon: <EuiIcon type="logoElasticsearch"/>,
-    }),
-    createItem('분야별 인플루언서', {
-      onClick: undefined,
-      icon: <EuiIcon type="logoElasticStack"/>,
-      items: [
-        createItem('전체', { key: 'b', }),
-        createItem('음식'),
-        createItem('건강/의학'),
-        createItem('도서'),
-        createItem('교육'),
-        createItem('음악'),
-        createItem('영화/드라마'),
-        createItem('운동'),
-        createItem('패션'),
-        createItem('뷰티'),
-      ],
     }),
     createItem('설정', {
       onClick: undefined,
