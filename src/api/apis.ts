@@ -86,14 +86,14 @@ export const useSignin = () => {
   )
 }
 
-export const apiGetChannelsByCategoryName = async (categoryName: string|undefined, page: number) => {
-  const res = await axios.get<{ items: SearchChannelResponseItem[]}>(`/v1/categories?categoryName=${categoryName}&page=${page}`)
-  return res.data.items
+export const apiGetCategoryDashboardData = async (categoryName: string|undefined, page: number) => {
+  const res = await axios.get<CategoryDashboardResponse>(`/v1/categories?categoryName=${categoryName}&page=${page}`)
+  return res.data
 }
 
-export const useChannelDataByCategoryName = (categoryName: string|undefined, page: number) => {
+export const useCategoryDashboardData = (categoryName: string|undefined, page: number) => {
   return useQuery(
-    ['/v1/channels', categoryName, page],
-    () => apiGetChannelsByCategoryName(categoryName, page),
+    ['/v1/categories', categoryName, page],
+    () => apiGetCategoryDashboardData(categoryName, page),
   )
 }

@@ -58,6 +58,7 @@ interface VideoSummaryResponse {
 }
 
 interface VideoSummaryResponseItem {
+  channelId: number,
   title: string,
   videoKey: string,
   videoType?: string,
@@ -70,4 +71,9 @@ interface VideoSummaryResponseItem {
   duration?: string,
   thumbnailUrl: string,
   publishedAt?: Date,
+}
+
+interface CategoryDashboardResponse {
+  channels: SearchChannelResponseItem[],
+  recentAdVideos: VideoSummaryResponseItem[],
 }
