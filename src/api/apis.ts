@@ -85,3 +85,15 @@ export const useSignin = () => {
     apiSignin
   )
 }
+
+export const apiGetChannelsByCategoryName = async (categoryName: string|undefined, page: number) => {
+  const res = await axios.get<{ items: SearchChannelResponseItem[]}>(`/v1/categories?categoryName=${categoryName}&page=${page}`)
+  return res.data.items
+}
+
+export const useChannelDataByCategoryName = (categoryName: string|undefined, page: number) => {
+  return useQuery(
+    ['/v1/channels', categoryName, page],
+    () => apiGetChannelsByCategoryName(categoryName, page),
+  )
+}
