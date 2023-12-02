@@ -17,6 +17,7 @@ import ChannelSummaryStats from "./ChannelSummaryStats";
 import ChannelDetailReviews from "./ChannelDetailReviews";
 import ChannelHeader from "./ChannelHeader";
 import ReviewWriteForm, {ReviewWriteFormData} from "./ReviewWriteForm";
+import ChannelDetailPlaylist from "./ChannelDetailPlaylist";
 
 function YoutubeChannelDetail() {
   const navigate = useNavigate();
@@ -229,196 +230,43 @@ function YoutubeChannelDetail() {
           <EuiSpacer size="xl"/>
           <EuiSpacer size="m"/>
 
-          <EuiTitle size="s">
-            <h3>최근 동영상</h3>
-          </EuiTitle>
-
-          <EuiSpacer size="m"/>
-
-          <EuiFlexGroup
-            wrap
-            gutterSize="m"
-          >
-            {channelData && channelData.videoSummary?.recentVideos?.map((item) => {
-              return (
-                <a
-                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
-                  target="_blank"
-                >
-                  <EuiFlexItem
-                    grow={false}
-                    style={{cursor: "pointer"}}
-                  >
-                    <VideoItem
-                      channelThumbnail={""}
-                      videoThumbnail={item.thumbnailUrl}
-                      videoTitle={item.title}
-                      commentCount={item.commentCount}
-                      viewCount={item.viewCount}
-                      publishedAt={item.publishedAt?.toString() || ""}
-                      showChannelAvatar={false}
-                    />
-                  </EuiFlexItem>
-                </a>
-              )
-            })}
-          </EuiFlexGroup>
+          <ChannelDetailPlaylist
+            title="인기 동영상"
+            isAd={false}
+            showChannelAvatar={false}
+            videos={channelData?.videoSummary?.recentAdVideos}
+          />
 
           <EuiSpacer size="xl"/>
 
-          <EuiFlexGroup
-            gutterSize="xs"
-          >
-            <EuiTitle size="s">
-              <h3>
-                최근 광고 동영상
-              </h3>
-            </EuiTitle>
-
-            <span
-              style={{
-                "fontWeight": "700",
-                "fontSize": "14px",
-                "padding": "4px 8px",
-                "backgroundColor": "#eaeaea",
-                "borderRadius": "6px",
-              }}
-            >
-                AD
-              </span>
-          </EuiFlexGroup>
-
-          <EuiSpacer size="m"/>
-
-          <EuiFlexGroup
-            wrap
-            gutterSize="m"
-          >
-            {channelData && channelData.videoSummary?.recentAdVideos?.map((item) => {
-              return (
-                <a
-                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
-                  target="_blank"
-                >
-                  <EuiFlexItem
-                    grow={false}
-                    onClick={() => {
-                      navigate(`/channels/${channelId}`)
-                    }}
-                    style={{cursor: "pointer"}}
-                  >
-                    <VideoItem
-                      channelThumbnail={""}
-                      videoThumbnail={item.thumbnailUrl}
-                      videoTitle={item.title}
-                      viewCount={item.viewCount}
-                      publishedAt={item.publishedAt?.toString() || ""}
-                      showChannelAvatar={false}
-                    />
-                  </EuiFlexItem>
-                </a>
-              )
-            })}
-          </EuiFlexGroup>
-
-          <EuiSpacer size="xl"/>
-          <EuiSpacer size="m"/>
-
-          <EuiTitle size="s">
-            <h3>인기 동영상</h3>
-          </EuiTitle>
-
-          <EuiSpacer size="m"/>
-
-          <EuiFlexGroup
-            wrap
-            gutterSize="m"
-          >
-            {channelData && channelData.videoSummary?.popularVideos?.map((item) => {
-              return (
-                <a
-                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
-                  target="_blank"
-                >
-                  <EuiFlexItem
-                    grow={false}
-                    onClick={() => {
-                      navigate(`/channels/${channelId}`)
-                    }}
-                    style={{cursor: "pointer"}}
-                  >
-                    <VideoItem
-                      channelThumbnail={""}
-                      videoThumbnail={item.thumbnailUrl}
-                      videoTitle={item.title}
-                      viewCount={item.viewCount}
-                      publishedAt={item.publishedAt?.toString() || ""}
-                      showChannelAvatar={false}
-                    />
-                  </EuiFlexItem>
-                </a>
-              )
-            })}
-          </EuiFlexGroup>
-
-          <EuiSpacer size="xl"/>
-
-          <EuiFlexGroup
-            gutterSize="xs"
-          >
-            <EuiTitle size="s">
-              <h3>
-                인기 광고 동영상
-              </h3>
-            </EuiTitle>
-            <span
-              style={{
-                "fontWeight": "700",
-                "fontSize": "14px",
-                "padding": "4px 8px",
-                "backgroundColor": "#eaeaea",
-                "borderRadius": "6px",
-              }}
-            >
-              AD
-            </span>
-          </EuiFlexGroup>
-
-          <EuiSpacer size="m"/>
-
-          <EuiFlexGroup
-            wrap
-            gutterSize="m"
-          >
-            {channelData && channelData.videoSummary?.popularAdVideos?.map((item) => {
-              return (
-                <a
-                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
-                  target="_blank"
-                >
-                  <EuiFlexItem
-                    grow={false}
-                    onClick={() => {
-                      navigate(`/channels/${channelId}`)
-                    }}
-                    style={{cursor: "pointer"}}
-                  >
-                    <VideoItem
-                      channelThumbnail={""}
-                      videoThumbnail={item.thumbnailUrl}
-                      videoTitle={item.title}
-                      viewCount={item.viewCount}
-                      publishedAt={item.publishedAt?.toString() || ""}
-                      showChannelAvatar={false}
-                    />
-                  </EuiFlexItem>
-                </a>
-              )
-            })}
-          </EuiFlexGroup>
+          <ChannelDetailPlaylist
+            title="인기 광고 동영상"
+            isAd={false}
+            showChannelAvatar={false}
+            videos={channelData?.videoSummary?.recentAdVideos}
+          />
 
           <EuiSpacer size="xl"/>
           <EuiSpacer size="xl"/>
+
+          <ChannelDetailPlaylist
+            title="최근 동영상"
+            isAd={false}
+            showChannelAvatar={false}
+            videos={channelData?.videoSummary?.recentVideos}
+          />
+
+          <EuiSpacer size="xl"/>
+
+          <ChannelDetailPlaylist
+            title="최근 광고 동영상"
+            isAd={true}
+            showChannelAvatar={false}
+            videos={channelData?.videoSummary?.recentAdVideos}
+          />
+
+          <EuiSpacer size="xl"/>
+          <EuiSpacer size="m"/>
 
           <div style={{width: "600px"}}>
             <EuiTitle size="s">
