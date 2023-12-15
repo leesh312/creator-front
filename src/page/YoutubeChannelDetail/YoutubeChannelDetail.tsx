@@ -103,14 +103,17 @@ function YoutubeChannelDetail() {
             videos={channelData?.videoSummary?.popularVideos}
           />
 
-          <EuiSpacer size="xl"/>
-
-          <ChannelDetailPlaylist
-            title="인기 광고 동영상"
-            isAd={false}
-            showChannelAvatar={false}
-            videos={channelData?.videoSummary?.popularAdVideos}
-          />
+          { !!channelData?.videoSummary?.popularAdVideos.length && (
+            <>
+              <EuiSpacer size="xl"/>
+              <ChannelDetailPlaylist
+                title="인기 광고 동영상"
+                isAd={false}
+                showChannelAvatar={false}
+                videos={channelData?.videoSummary?.popularAdVideos}
+              />
+            </>
+          )}
 
           <EuiSpacer size="xl"/>
           <EuiSpacer size="xl"/>
@@ -122,14 +125,18 @@ function YoutubeChannelDetail() {
             videos={channelData?.videoSummary?.recentVideos}
           />
 
-          <EuiSpacer size="xl"/>
 
-          <ChannelDetailPlaylist
-            title="최근 광고 동영상"
-            isAd={true}
-            showChannelAvatar={false}
-            videos={channelData?.videoSummary?.recentAdVideos}
-          />
+          { !!channelData?.videoSummary?.popularAdVideos.length && (
+            <>
+              <EuiSpacer size="xl"/>
+              <ChannelDetailPlaylist
+                title="최근 광고 동영상"
+                isAd={true}
+                showChannelAvatar={false}
+                videos={channelData?.videoSummary?.recentAdVideos}
+              />
+            </>
+          )}
 
           <EuiSpacer size="xl"/>
           <EuiSpacer size="xl"/>

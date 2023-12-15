@@ -17,6 +17,7 @@
     "dayjs": "^1.11.10",
     "googleapis": "^128.0.0",
     "http-proxy-middleware": "^2.0.6",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "node-sass": "^9.0.0",
     "prop-types": "^15.8.1",

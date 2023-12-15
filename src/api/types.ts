@@ -51,7 +51,8 @@ interface SearchChannelResponseItem {
   viewRatio: number
   avgCommentCount: number
   commentRatio: number
-  tags: number
+  tags: string|undefined
+  reviewSummary?: ReviewSummary
   videoSummary?: VideoSummaryResponse
 }
 
@@ -60,6 +61,11 @@ interface VideoSummaryResponse {
   popularVideos: VideoSummaryResponseItem[]
   recentAdVideos: VideoSummaryResponseItem[]
   popularAdVideos: VideoSummaryResponseItem[]
+}
+
+interface ReviewSummary {
+  count: number
+  evalScore: number
 }
 
 interface VideoSummaryResponseItem {
