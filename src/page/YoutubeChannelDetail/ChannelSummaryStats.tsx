@@ -1,5 +1,5 @@
 import {EuiFlexGroup, EuiFlexItem, EuiIcon, EuiStat, EuiTextColor} from "@elastic/eui";
-import {parseCount} from "../../util/utils";
+import {parseCount, parseRatio} from "../../util/utils";
 import React from "react";
 
 const ChannelSummaryStats = ({channelData}: { channelData?: SearchChannelResponseItem }) => {
@@ -12,11 +12,11 @@ const ChannelSummaryStats = ({channelData}: { channelData?: SearchChannelRespons
           description="구독자수"
           textAlign="left"
         >
-          <EuiTextColor color="success">
-            <span>
-              한달 3.5% <EuiIcon type="sortUp"/>
-            </span>
-          </EuiTextColor>
+          {/* TODO <EuiTextColor color="success">*/}
+          {/*  <span>*/}
+          {/*    한달 3.5% <EuiIcon type="sortUp"/>*/}
+          {/*  </span>*/}
+          {/*</EuiTextColor>*/}
         </EuiStat>
       </EuiFlexItem>
       <EuiFlexItem>
@@ -25,16 +25,16 @@ const ChannelSummaryStats = ({channelData}: { channelData?: SearchChannelRespons
           description="동영상"
           textAlign="left"
         >
-          <EuiTextColor color="success">
-            <span>
-              한달 평균 8.2개
-            </span>
-          </EuiTextColor>
+          {/* TODO <EuiTextColor color="success">*/}
+          {/*  <span>*/}
+          {/*    한달 평균 8.2개*/}
+          {/*  </span>*/}
+          {/*</EuiTextColor>*/}
         </EuiStat>
       </EuiFlexItem>
       <EuiFlexItem>
         <EuiStat
-          title={"102만"}
+          title={parseCount(channelData?.avgViewCount || 0)}
           description="평균 조회수"
           textAlign="left"
         >
@@ -43,28 +43,28 @@ const ChannelSummaryStats = ({channelData}: { channelData?: SearchChannelRespons
       </EuiFlexItem>
       <EuiFlexItem>
         <EuiStat
-          title={"25.6%"}
+          title={parseRatio(channelData?.viewRatio || 0)}
           description="조회수/구독자수"
           textAlign="left"
         >
-          <EuiTextColor color="success">
-                  <span>
-                    참여율 높음
-                  </span>
-          </EuiTextColor>
+          {/* TODO <EuiTextColor color="success">*/}
+          {/*  <span>*/}
+          {/*    참여율 높음*/}
+          {/*  </span>*/}
+          {/*</EuiTextColor>*/}
         </EuiStat>
       </EuiFlexItem>
       <EuiFlexItem>
         <EuiStat
-          title={"5.3%"}
-          description="댓글/구독자수"
+          title={parseRatio(channelData?.commentRatio || 0)}
+          description="댓글/조회수"
           textAlign="left"
         >
-          <EuiTextColor color="success">
-                  <span>
-                    참여율 매우 높음
-                  </span>
-          </EuiTextColor>
+          {/* TODO <EuiTextColor color="success">*/}
+          {/*  <span>*/}
+          {/*    참여율 매우 높음*/}
+          {/*  </span>*/}
+          {/*</EuiTextColor>*/}
         </EuiStat>
       </EuiFlexItem>
     </EuiFlexGroup>

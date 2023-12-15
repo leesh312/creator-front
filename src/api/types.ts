@@ -42,11 +42,16 @@ interface SearchChannelResponseItem {
   channelId: number,
   platform: string
   name: string
+  description: string
+  country?: string
   thumbnailUrl: string
   followerCount: number
   contentsCount: number
-  description: string
-  country?: string
+  avgViewCount: number
+  viewRatio: number
+  avgCommentCount: number
+  commentRatio: number
+  tags: number
   videoSummary?: VideoSummaryResponse
 }
 

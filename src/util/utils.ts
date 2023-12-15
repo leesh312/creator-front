@@ -18,9 +18,29 @@ export const parseCount = (count: number) => {
   return count
 }
 
+export const parseRatio = (ratio: number) => {
+  const r = ratio * 100
+  if(r < 0.001) {
+    return "0%"
+  }
+  if(r < 0.01) {
+    return r.toFixed(4) + "%"
+  }
+  if(r < 0.1) {
+    return r.toFixed(3) + "%"
+  }
+  if(r < 1) {
+    return r.toFixed(2) + "%"
+  }
+  if(r < 100) {
+    return r.toFixed(1) + "%"
+  }
+  return r.toFixed(0) + "%"
+}
+
 export const parseCountry = (countryCode: string | undefined) => {
   if (!countryCode) {
-    return "국적 미기재"
+    return "-"
   }
   switch (countryCode) {
     case "KR": return "대한민국"
