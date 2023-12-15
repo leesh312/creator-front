@@ -29,36 +29,77 @@ const SideNav = () => {
       onClick: undefined,
       icon: <EuiIcon type="logoElasticStack"/>,
       items: [
+// 72200. Entertainment = 엔터테인먼트
+// 33508. Travel & Events = 여행/이벤트
+// 21019. Gaming = 게임
+// 19745. Comedy = 코메디
+// 27271. Music = 음악
+// 4750. Pets & Animals = 애완동물/동물
+// 12900. Film & Animation = 영화/애니메이션
+// 74936. People & Blogs = 인물/블로그
+// 44948. News & Politics = 뉴스/정치
+// 22300. Autos & Vehicles = 자동차/교통
+// 11046. Sports = 스포츠
+// 9561. Howto & Style = 노하우/스타일
+// 6752. Science & Technology 6752 = 과학기술
+// 6600. Education  = 교육
+// Nonprofits & Activism = 비영리 활동
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
         createItem('PPL/BDC 모아보기', { key: 'b', }),
-        createItem('웹예능', {
-          onClick: () => { navigate("/categories/웹예능") },
+        createItem('엔터테인먼트', {
+          onClick: () => { navigate("/categories/엔터테인먼트") },
         }),
-        createItem('음식', {
-          onClick: () => { navigate("/categories/음식") },
+        createItem('여행/이벤트', {
+          onClick: () => { navigate("/categories/여행&이벤트") },
         }),
-        createItem('건강/의학', {
-          onClick: () => { navigate("/categories/건강의학") },
+        createItem('게임', {
+          onClick: () => { navigate("/categories/게임") },
         }),
-        createItem('도서', {
-          onClick: () => { navigate("/categories/도서") },
-        }),
-        createItem('교육', {
-          onClick: () => { navigate("/categories/교육") },
+        createItem('코메디', {
+          onClick: () => { navigate("/categories/코메디") },
         }),
         createItem('음악', {
           onClick: () => { navigate("/categories/음악") },
         }),
-        createItem('영화/드라마', {
-          onClick: () => { navigate("/categories/영화드라마") },
+        createItem('애완동물/동물', {
+          onClick: () => { navigate("/categories/애완동물&동물") },
         }),
-        createItem('운동', {
-          onClick: () => { navigate("/categories/운동") },
+        createItem('영화/애니메이션', {
+          onClick: () => { navigate("/categories/영화&애니메이션") },
         }),
-        createItem('패션', {
-          onClick: () => { navigate("/categories/패션") },
+        createItem('인물/블로그', {
+          onClick: () => { navigate("/categories/인물&블로그") },
         }),
-        createItem('뷰티', {
-          onClick: () => { navigate("/categories/뷰티") },
+        createItem('뉴스/정치', {
+          onClick: () => { navigate("/categories/뉴스&정치") },
+        }),
+        createItem('자동차/교통', {
+          onClick: () => { navigate("/categories/자동차&교통") },
+        }),
+        createItem('스포츠', {
+          onClick: () => { navigate("/categories/스포츠") },
+        }),
+        createItem('노하우/스타일', {
+          onClick: () => { navigate("/categories/노하우&스타일") },
+        }),
+        createItem('과학기술', {
+          onClick: () => { navigate("/categories/과학기술") },
+        }),
+        createItem('교육', {
+          onClick: () => { navigate("/categories/교육") },
         }),
       ],
     }),
@@ -92,4 +133,4 @@ const SideNav = () => {
   )
 }
 
-export default SideNav
+export default SideNav;

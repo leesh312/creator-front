@@ -234,7 +234,7 @@ function YoutubeChannelDetail() {
             title="인기 동영상"
             isAd={false}
             showChannelAvatar={false}
-            videos={channelData?.videoSummary?.recentAdVideos}
+            videos={channelData?.videoSummary?.popularVideos}
           />
 
           <EuiSpacer size="xl"/>
@@ -243,7 +243,7 @@ function YoutubeChannelDetail() {
             title="인기 광고 동영상"
             isAd={false}
             showChannelAvatar={false}
-            videos={channelData?.videoSummary?.recentAdVideos}
+            videos={channelData?.videoSummary?.popularAdVideos}
           />
 
           <EuiSpacer size="xl"/>
