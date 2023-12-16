@@ -2,6 +2,7 @@ import {EuiAvatar, EuiFlexGroup, EuiFlexItem, EuiSpacer, EuiText, EuiTextColor, 
 import React from "react";
 import {Dot} from "../../component/VideoItem";
 import {parseCountry} from "../../util/utils";
+import lodash from "lodash";
 
 const ChannelHeader = ({ channelData } : { channelData?: SearchChannelResponseItem }) => {
 
@@ -27,7 +28,15 @@ const ChannelHeader = ({ channelData } : { channelData?: SearchChannelResponseIt
           <EuiTextColor color="subdued">
             {parseCountry(channelData?.country)}
             <Dot/>
-            #예능 #직업
+            {!!channelData && !!channelData.tags && lodash.chain(channelData.tags).split(",").take(4).map((tag: string) => (
+                <>
+                  <EuiTextColor color="subdued">
+                    #{tag}
+                  </EuiTextColor>
+                  {" "}
+                </>
+              )
+            ).value()}
           </EuiTextColor>
           <EuiSpacer size="xs" />
           <pre style={{ background: "#f7f8fc", padding: "12px", borderRadius: "4px", fontSize: "12px", maxHeight: "80px", overflow: "hidden" }}>
