@@ -21,7 +21,7 @@ const ChannelSummaryStats = ({channelData}: { channelData?: SearchChannelRespons
       </EuiFlexItem>
       <EuiFlexItem>
         <EuiStat
-          title={channelData?.contentsCount || "0"}
+          title={parseCount(channelData?.contentsCount || 0)}
           description="동영상"
           textAlign="left"
         >

@@ -1,41 +1,61 @@
 
 
 export const parseCount = (count: number) => {
+  let number: number
+  let unit: string
+  let fixed: number
+
   if(count > 10000000000) {
-    const digit = (count / 100000000).toFixed(0)
-    return digit + "억"
+    number = (count / 100000000)
+    fixed = 0
+    unit = "억"
   } else if(count > 100000000) {
-    const digit = (count / 100000000).toFixed(1)
-    return digit + "억"
+    number = (count / 100000000)
+    fixed = 1
+    unit = "억"
   } else if(count > 100000) {
-    const digit = (count / 10000).toFixed(0)
-    return digit + "만"
+    number = (count / 10000)
+    fixed = 0
+    unit = "만"
   } else if(count > 10000) {
-    const digit = (count / 10000).toFixed(1)
-    return digit + "만"
+    number = (count / 10000)
+    fixed = 1
+    unit = "만"
+  } else {
+    number = count
+    fixed = 0
+    unit = ""
   }
 
-  return count
+  if(fixed === 0) {
+    return numberWithCommas(Number(number.toFixed(0))) + unit
+  } else {
+    return number.toFixed(fixed) + unit
+  }
 }
 
 export const parseRatio = (ratio: number) => {
   const r = ratio * 100
+  let result: string
   if(r < 0.001) {
-    return "0%"
+    result = "0%"
+  } else if(r < 0.01) {
+    result = r.toFixed(4) + "%"
+  } else if(r < 0.1) {
+    result = r.toFixed(3) + "%"
+  } else if(r < 1) {
+    result = r.toFixed(2) + "%"
+  } else if(r < 100) {
+    result = r.toFixed(1) + "%"
+  } else {
+    result = r.toFixed(0) + "%"
   }
-  if(r < 0.01) {
-    return r.toFixed(4) + "%"
+
+  if(result.endsWith(".0%")) {
+    return result.replace(".0%", "%")
+  } else {
+    return result
   }
-  if(r < 0.1) {
-    return r.toFixed(3) + "%"
-  }
-  if(r < 1) {
-    return r.toFixed(2) + "%"
-  }
-  if(r < 100) {
-    return r.toFixed(1) + "%"
-  }
-  return r.toFixed(0) + "%"
 }
 
 export const parseCountry = (countryCode: string | undefined) => {
@@ -47,4 +67,9 @@ export const parseCountry = (countryCode: string | undefined) => {
   }
 
   return countryCode
+}
+
+
+export const numberWithCommas = (x: number) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
