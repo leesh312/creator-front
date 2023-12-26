@@ -25,51 +25,51 @@ const SideNav = () => {
   };
 
   const sideNav = [
-    createItem('BDC/PPL/채널', {
+    createItem('카테고리별 광고 영상/채널', {
       onClick: undefined,
       icon: <EuiIcon type="logoElasticStack"/>,
       items: [
         createItem('엔터테인먼트', {
-          onClick: () => { navigate("/categories/엔터테인먼트") },
+          onClick: () => { navigate("/categories/entertainment") },
         }),
         createItem('여행/이벤트', {
-          onClick: () => { navigate("/categories/여행이벤트") },
+          onClick: () => { navigate("/categories/travel") },
         }),
         createItem('게임', {
-          onClick: () => { navigate("/categories/게임") },
+          onClick: () => { navigate("/categories/gaming") },
         }),
         createItem('코메디', {
-          onClick: () => { navigate("/categories/코메디") },
+          onClick: () => { navigate("/categories/comedy") },
         }),
         createItem('음악', {
-          onClick: () => { navigate("/categories/음악") },
+          onClick: () => { navigate("/categories/music") },
         }),
         createItem('애완동물/동물', {
-          onClick: () => { navigate("/categories/동물") },
+          onClick: () => { navigate("/categories/pet") },
         }),
         createItem('영화/애니메이션', {
-          onClick: () => { navigate("/categories/영화애니메이션") },
+          onClick: () => { navigate("/categories/film") },
         }),
         createItem('인물/블로그', {
-          onClick: () => { navigate("/categories/인물블로그") },
+          onClick: () => { navigate("/categories/people") },
         }),
         createItem('뉴스/정치', {
-          onClick: () => { navigate("/categories/뉴스정치") },
+          onClick: () => { navigate("/categories/news") },
         }),
         createItem('자동차/교통', {
-          onClick: () => { navigate("/categories/자동차교통") },
+          onClick: () => { navigate("/categories/autos") },
         }),
         createItem('스포츠', {
-          onClick: () => { navigate("/categories/스포츠") },
+          onClick: () => { navigate("/categories/sports") },
         }),
         createItem('노하우/스타일', {
-          onClick: () => { navigate("/categories/노하우스타일") },
+          onClick: () => { navigate("/categories/style") },
         }),
         createItem('과학기술', {
-          onClick: () => { navigate("/categories/과학기술") },
+          onClick: () => { navigate("/categories/science") },
         }),
         createItem('교육', {
-          onClick: () => { navigate("/categories/교육") },
+          onClick: () => { navigate("/categories/education") },
         }),
       ],
     }),
@@ -78,7 +78,6 @@ const SideNav = () => {
       icon: <EuiIcon type="logoCloudEnterprise"/>,
       items: [
         createItem('계정 설정'),
-        createItem('연락처'),
         createItem('이용권'),
       ],
     }),
