@@ -85,6 +85,8 @@ interface VideoSummaryResponseItem {
 }
 
 interface CategoryDashboardResponse {
+  totalCount: number
+  totalPage: number
   channels: SearchChannelResponseItem[],
   recentAdVideos: VideoSummaryResponseItem[],
 }

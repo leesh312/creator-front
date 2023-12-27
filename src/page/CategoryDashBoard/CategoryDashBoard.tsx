@@ -133,32 +133,32 @@ const CategoryDashBoard = () => {
 
       <EuiSpacer size="xl"/>
 
-      { !!categoryDashboardData?.recentAdVideos?.length && (
-        <>
-          <EuiFlexGroup
-            gutterSize="xs"
-            alignItems={"center"}
-          >
-            <EuiTitle size="s">
-              <h3>
-                최근 광고 영상
-              </h3>
-            </EuiTitle>
-            <span
-              style={{
-                "fontWeight": "700",
-                "fontSize": "14px",
-                "padding": "4px 8px",
-                "backgroundColor": "#eaeaea",
-                "borderRadius": "6px",
-              }}
-            >
+      <EuiFlexGroup
+        gutterSize="xs"
+        alignItems={"center"}
+      >
+        <EuiTitle size="s">
+          <h3>
+            최근 광고 영상
+          </h3>
+        </EuiTitle>
+        <span
+          style={{
+            "fontWeight": "700",
+            "fontSize": "14px",
+            "padding": "4px 8px",
+            "backgroundColor": "#eaeaea",
+            "borderRadius": "6px",
+          }}
+        >
           AD
         </span>
-          </EuiFlexGroup>
+      </EuiFlexGroup>
 
-          <EuiSpacer size="m"/>
+        <EuiSpacer size="m"/>
 
+      { !!categoryDashboardData?.recentAdVideos?.length && (
+          <>
           <EuiFlexGroup
             wrap
             gutterSize="l"
@@ -193,17 +193,18 @@ const CategoryDashBoard = () => {
           <EuiSpacer size="l"/>
           <EuiFlexGroup>
             <EuiFlexItem>
-              <Link to={"#"}>최근 광고 영상 전체보기</Link>
+              <Link to={`/categories/${categoryName}/videos`}>최근 광고 영상 전체보기</Link>
             </EuiFlexItem>
           </EuiFlexGroup>
-
-          <EuiSpacer size="xl"/>
         </>
       )}
 
+      <EuiSpacer size="xl"/>
+      <EuiSpacer size="m"/>
+
       <EuiTitle size="s">
         <h3>
-          {categoryName} 인기 채널
+          인기 채널
         </h3>
       </EuiTitle>
 
@@ -218,12 +219,12 @@ const CategoryDashBoard = () => {
             pageIndex: page,
             pageSize: 20,
             totalItemCount: 100,
+            showPerPageOptions: false,
           }}
           loading={isLoading}
           noItemsMessage={
             <>
               <div style={{minHeight: "500px", }}>
-
               </div>
             </>
           }
