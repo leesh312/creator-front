@@ -165,27 +165,23 @@ const CategoryDashBoard = () => {
           >
             {
               categoryDashboardData?.recentAdVideos.map((item) => (
-                <a
-                  href={`https://www.youtube.com/watch?v=${item.videoKey}`}
-                  target="_blank"
+                <EuiFlexItem
+                  grow={false}
+                  style={{cursor: "pointer"}}
                 >
-                  <EuiFlexItem
-                    grow={false}
-                    onClick={() => {
-                      navigate(`/channels/${item.channelId}`)
-                    }}
-                    style={{cursor: "pointer"}}
-                  >
-                    <VideoItem
-                      channelThumbnail={""}
-                      videoThumbnail={item.thumbnailUrl}
-                      videoTitle={item.title}
-                      viewCount={item.viewCount}
-                      publishedAt={item.publishedAt?.toString() || ""}
-                      showChannelAvatar={false}
-                    />
-                  </EuiFlexItem>
-                </a>
+                  <VideoItem
+                    channelThumbnail={item.channelThumbnail}
+                    channelName={item.channelName}
+                    videoKey={item.videoKey}
+                    videoThumbnail={item.thumbnailUrl}
+                    videoTitle={item.title}
+                    viewCount={item.viewCount}
+                    publishedAt={item.publishedAt?.toString() || ""}
+                    onChannelClick={() => { navigate(`/channels/${item.channelId}`) }}
+                    showChannelName
+                    showChannelAvatar
+                  />
+                </EuiFlexItem>
               ))
             }
           </EuiFlexGroup>

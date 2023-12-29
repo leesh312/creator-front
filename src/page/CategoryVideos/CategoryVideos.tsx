@@ -34,6 +34,8 @@ export const CategoryVideos = () => {
   //   }
   // };
 
+  console.log("categoryVideos?.totalPage", categoryVideos?.totalPage)
+  console.log("page", page)
 
   return (
 
@@ -100,27 +102,25 @@ export const CategoryVideos = () => {
         >
           {
             categoryVideos?.recentAdVideos.map((item) => (
-              <a
-                href={`https://www.youtube.com/watch?v=${item.videoKey}`}
-                target="_blank"
+              <EuiFlexItem
+                grow={false}
+                onClick={() => {
+                  navigate(`/channels/${item.channelId}`)
+                }}
+                style={{cursor: "pointer"}}
               >
-                <EuiFlexItem
-                  grow={false}
-                  onClick={() => {
-                    navigate(`/channels/${item.channelId}`)
-                  }}
-                  style={{cursor: "pointer"}}
-                >
-                  <VideoItem
-                    channelThumbnail={""}
-                    videoThumbnail={item.thumbnailUrl}
-                    videoTitle={item.title}
-                    viewCount={item.viewCount}
-                    publishedAt={item.publishedAt?.toString() || ""}
-                    showChannelAvatar={false}
-                  />
-                </EuiFlexItem>
-              </a>
+                <VideoItem
+                  channelThumbnail={item.channelThumbnail}
+                  channelName={item.channelName}
+                  videoKey={item.videoKey}
+                  videoThumbnail={item.thumbnailUrl}
+                  videoTitle={item.title}
+                  viewCount={item.viewCount}
+                  publishedAt={item.publishedAt?.toString() || ""}
+                  showChannelName={true}
+                  showChannelAvatar={true}
+                />
+              </EuiFlexItem>
             ))
           }
         </EuiFlexGroup>

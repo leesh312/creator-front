@@ -46,6 +46,7 @@ const ChannelDetailPlaylist = ({title, isAd, showChannelAvatar, videos}: Props) 
                 >
                   <VideoItem
                     channelThumbnail={""}
+                    videoKey={item.videoKey}
                     videoThumbnail={item.thumbnailUrl}
                     videoTitle={item.title}
                     viewCount={item.viewCount}

@@ -8,12 +8,12 @@ import SideNav from "./layout/SideNav";
 import {EuiPage} from "@elastic/eui";
 import SignupComplete from "./page/SignupComplete/SignupComplete";
 import Signin from "./page/Signin/Signin";
-import Dashboard from "./page/Dashboard/Dashboard";
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime'
 import "dayjs/locale/ko"
 import CategoryDashBoard from "./page/CategoryDashBoard/CategoryDashBoard";
 import CategoryVideos from "./page/CategoryVideos/CategoryVideos";
+import Home from "./page/Home/Home";
 
 dayjs.extend(relativeTime)
 dayjs.locale("ko")
@@ -29,12 +29,11 @@ function App() {
       >
         <SideNav />
         <Routes>
-          <Route path="/" element={<Dashboard/>}/>
+          <Route path="/" element={<Home/>}/>
           <Route path="/channels/:channelId" element={<YoutubeChannelDetail/>}/>
           <Route path="/signin" element={<Signin />}/>
           <Route path="/signup" element={<Signup />}/>
           <Route path="/welcome" element={<SignupComplete />}/>
-          <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/categories/:categoryName" element={<CategoryDashBoard />}/>
           <Route path="/categories/:categoryName/videos" element={<CategoryVideos />}/>
         </Routes>

@@ -5,68 +5,92 @@ import dayjs from "dayjs";
 import {parseCount} from "../util/utils";
 
 interface VideoItemProps {
-  channelThumbnail: string
+  channelThumbnail?: string
+  channelName?: string
   videoThumbnail: string
+  videoKey: string
   videoTitle: string
   viewCount: number
   commentCount?: number
   publishedAt: string
-  showChannelAvatar: boolean
+  showChannelAvatar?: boolean
+  showChannelName?: boolean
+  onChannelClick?: VoidFunction
 }
 
 const VideoItem = (props: VideoItemProps) => {
   return (
     <div
-      style={{ "width": "220px" }}
+      style={{"width": "220px"}}
     >
-      <img
-        src={props.videoThumbnail}
-        width="220"
-        height="124"
-        alt=""
-        style={{ "borderRadius": "4px" }}
-      />
+      <a
+        href={`https://www.youtube.com/watch?v=${props.videoKey}`}
+        target="_blank"
+      >
+        <img
+          src={props.videoThumbnail}
+          width="220"
+          height="124"
+          alt=""
+          style={{"borderRadius": "4px"}}
+        />
+      </a>
       <EuiSpacer size="s"/>
       <EuiFlexGroup
         gutterSize="s"
         alignItems="center"
       >
-        { props.showChannelAvatar && (
+        {props.showChannelAvatar && (
           <EuiFlexItem
             grow={false}
           >
             <img
               src={props.channelThumbnail}
               style={{width: "40px", height: "40px", borderRadius: "20px"}}
+              onClick={props.onChannelClick}
             />
           </EuiFlexItem>
         )}
         <EuiFlexItem
           grow={true}
         >
+          <a
+            href={`https://www.youtube.com/watch?v=${props.videoKey}`}
+            target="_blank"
+          >
+            <div style={{
+              lineHeight: "1.2em",
+              fontWeight: "bold",
+              height: "2.4em",
+              overflow: "hidden"
+            }}>
+              {props.videoTitle}
+            </div>
+          </a>
           <div style={{
-            lineHeight: "1.2em",
-            fontWeight: "bold",
-            height: "2.4em",
-            overflow: "hidden"
-          }}>
-            {props.videoTitle}
-          </div>
-          <div style={{
-            marginTop: "8px",
             fontSize: "0.9em",
-            color: "#777"
+            color: "#666"
           }
           }>
-            <span>조회수 {parseCount(props.viewCount)}회</span>
-            <Dot/>
-            <span>{dayjs(props.publishedAt).fromNow()}</span>
-            { props.commentCount && props.commentCount > 0 && (
-              <>
-                <Dot/>
-                <span>댓글 {props.commentCount}</span>
-              </>
+            {props.showChannelName && (
+              <div
+                style={{marginTop: "8px", fontWeight: "bold"}}
+                onClick={props.onChannelClick}
+              >
+                {props.channelName}
+              </div>
             )}
+            <div style={{marginTop: "4px"}}>
+              <span>조회수 {parseCount(props.viewCount)}회</span>
+              <Dot/>
+              <span>{dayjs(props.publishedAt).fromNow()}</span>
+              {props.commentCount && props.commentCount > 0 && (
+                <>
+                  <Dot/>
+                  <span>댓글 {props.commentCount}</span>
+                </>
+              )}
+            </div>
           </div>
         </EuiFlexItem>
       </EuiFlexGroup>

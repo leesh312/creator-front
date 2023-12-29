@@ -70,6 +70,8 @@ interface ReviewSummary {
 
 interface VideoSummaryResponseItem {
   channelId: number,
+  channelName?: string,
+  channelThumbnail?: string,
   title: string,
   videoKey: string,
   videoType?: string,
