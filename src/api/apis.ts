@@ -108,3 +108,15 @@ export const useCategoryVideoData = (categoryName: string|undefined, onlyAd: boo
     () => apiGetCategoryVideoData(categoryName, onlyAd, period, page),
   )
 }
+
+export const apiGetCategoryChannelData = async (categoryName: string|undefined, onlyAd: boolean, page: number) => {
+  const res = await  axios.get<CategoryDashboardResponse>(`/v1/categories/channels?categoryName=${categoryName}&page=${page}&only-ad=${onlyAd}`)
+  return res.data
+}
+
+export const useCategoryChannelData = (categoryName: string|undefined, onlyAd: boolean, page: number) => {
+  return useQuery(
+    ['/v1/categories/channels', categoryName, onlyAd, page],
+    () => apiGetCategoryChannelData(categoryName, onlyAd, page)
+  )
+}

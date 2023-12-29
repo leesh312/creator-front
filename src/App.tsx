@@ -14,6 +14,7 @@ import "dayjs/locale/ko"
 import CategoryDashBoard from "./page/CategoryDashBoard/CategoryDashBoard";
 import CategoryVideos from "./page/CategoryVideos/CategoryVideos";
 import Home from "./page/Home/Home";
+import CategoryChannels from "./page/CategoryChannels/CategoryChannels";
 
 dayjs.extend(relativeTime)
 dayjs.locale("ko")
@@ -36,6 +37,7 @@ function App() {
           <Route path="/welcome" element={<SignupComplete />}/>
           <Route path="/categories/:categoryName" element={<CategoryDashBoard />}/>
           <Route path="/categories/:categoryName/videos" element={<CategoryVideos />}/>
+          <Route path="/categories/:categoryName/channels" element={<CategoryChannels />}/>
         </Routes>
       </EuiPage>
     </BrowserRouter>

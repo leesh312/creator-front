@@ -38,7 +38,6 @@ export const CategoryVideos = () => {
   console.log("page", page)
 
   return (
-
     <EuiPageBody
       paddingSize="l"
       panelled

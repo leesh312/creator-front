@@ -1,6 +1,9 @@
 
 
 export const parseCount = (count: number) => {
+  if (!count) {
+    return "-"
+  }
   let number: number
   let unit: string
   let fixed: number

@@ -47,10 +47,17 @@ interface SearchChannelResponseItem {
   thumbnailUrl: string
   followerCount: number
   contentsCount: number
-  avgViewCount: number
   viewRatio: number
-  avgCommentCount: number
   commentRatio: number
+  totalAdCount: number
+  avgViewCount: number
+  avgViewRatio: number
+  avgCommentCount: number
+  avgCommentRatio: number
+  avgAdViewCount: number
+  avgAdViewRatio: number
+  avgAdCommentCount: number
+  avgAdCommentRatio: number
   tags: string|undefined
   reviewSummary?: ReviewSummary
   videoSummary?: VideoSummaryResponse

@@ -1,38 +1,37 @@
 import {
-  EuiAvatar,
-  EuiBadge,
+  EuiAvatar, EuiBadge,
   EuiBasicTable,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiLink,
-  EuiPageBody,
-  EuiPageSection, EuiSpacer,
-  EuiTextColor,
+  EuiPageBody, EuiPageSection,
+  EuiPagination,
+  EuiSpacer,
+  EuiTab,
+  EuiTabs, EuiTextColor,
   EuiTitle
 } from "@elastic/eui";
-import {EuiTableFieldDataColumnType} from "@elastic/eui/src/components/basic_table/table_types";
+import VideoItem from "../../component/VideoItem";
+import React, {useMemo} from "react";
+import {Criteria} from "@elastic/eui/src/components/basic_table/basic_table";
 import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
-import {useCategoryDashboardData} from "../../api/apis";
-import React, {useMemo, useState} from "react";
+import {useCategoryChannelData, useCategoryDashboardData} from "../../api/apis";
+import {number} from "prop-types";
+import {EuiTableFieldDataColumnType} from "@elastic/eui/src/components/basic_table/table_types";
+import lodash from "lodash";
 import {parseCount} from "../../util/utils";
 import {NegativeStar, PositiveStar} from "../YoutubeChannelDetail/ChannelDetailReviews";
-import VideoItem, {Dot} from "../../component/VideoItem";
-import {Criteria} from "@elastic/eui/src/components/basic_table/basic_table";
-import lodash from "lodash"
-import {number} from "prop-types";
 
-
-const CategoryDashBoard = () => {
+const CategoryChannels = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const {categoryName} = useParams()
 
   const page: number = useMemo(() => {
     const p = searchParams.get("page")
-    return p ? Number(p) : 0
+    return p ? Number(p) : 1
   }, [searchParams])
 
-  const {data: categoryDashboardData, isLoading } = useCategoryDashboardData(categoryName, page)
+  const {data: channelData, isLoading } = useCategoryChannelData(categoryName, true, page)
 
   const columns: Array<EuiTableFieldDataColumnType<SearchChannelResponseItem>> = [
     {
@@ -146,94 +145,40 @@ const CategoryDashBoard = () => {
       restrictWidth
     >
       <EuiTitle>
-        <h2>{categoryName}</h2>
-      </EuiTitle>
-
-      <EuiSpacer size="xl"/>
-
-      <EuiFlexGroup
-        gutterSize="xs"
-        alignItems={"center"}
-      >
-        <EuiTitle size="s">
-          <h3>
-            최근 광고 영상
-          </h3>
-        </EuiTitle>
-        <span
-          style={{
-            "fontWeight": "700",
-            "fontSize": "14px",
-            "padding": "4px 8px",
-            "backgroundColor": "#eaeaea",
-            "borderRadius": "6px",
-          }}
-        >
+        <h2>
+          {categoryName}
+          {" "}
+          광고 영상
+          {" "}
+          <span
+            style={{
+              "fontWeight": "700",
+              "fontSize": "14px",
+              "padding": "4px 8px",
+              "backgroundColor": "#eaeaea",
+              "borderRadius": "6px",
+            }}
+          >
           AD
         </span>
-      </EuiFlexGroup>
-
-        <EuiSpacer size="m"/>
-
-      { !!categoryDashboardData?.recentAdVideos?.length && (
-          <>
-          <EuiFlexGroup
-            wrap
-            gutterSize="l"
-          >
-            {
-              categoryDashboardData?.recentAdVideos.map((item) => (
-                <EuiFlexItem
-                  grow={false}
-                  style={{cursor: "pointer"}}
-                >
-                  <div
-                    style={{ width: "265px"}}
-                  >
-                    <VideoItem
-                      channelThumbnail={item.channelThumbnail}
-                      channelName={item.channelName}
-                      videoKey={item.videoKey}
-                      videoThumbnail={item.thumbnailUrl}
-                      videoTitle={item.title}
-                      viewCount={item.viewCount}
-                      publishedAt={item.publishedAt?.toString() || ""}
-                      onChannelClick={() => { navigate(`/channels/${item.channelId}`) }}
-                      showChannelName
-                      showChannelAvatar
-                    />
-                  </div>
-                </EuiFlexItem>
-              ))
-            }
-          </EuiFlexGroup>
-
-          <EuiSpacer size="l"/>
-          <EuiFlexGroup>
-            <EuiFlexItem>
-              <Link to={`/categories/${categoryName}/videos`}>최근 광고 영상 전체보기</Link>
-            </EuiFlexItem>
-          </EuiFlexGroup>
-        </>
-      )}
-
-      <EuiSpacer size="xl"/>
-      <EuiSpacer size="m"/>
-
-      <EuiTitle size="s">
-        <h3>
-          인기 채널
-        </h3>
+        </h2>
       </EuiTitle>
 
       <EuiPageSection>
         <EuiBasicTable
           tableCaption="채널 데이터"
-          items={categoryDashboardData?.channels || []}
+          items={channelData?.channels || []}
           columns={columns}
           tableLayout={'fixed'}
-          onChange={(criteria: Criteria<any>) => {}}
-          pagination={undefined}
+          onChange={(criteria: Criteria<any>) => {
+            setSearchParams({ page: `${(criteria.page?.index || 0) + 1}` })
+          }}
+          pagination={{
+            pageIndex: (page - 1),
+            pageSize: (channelData?.totalPage || 1),
+            totalItemCount: (channelData?.totalCount || 0),
+            showPerPageOptions: false,
+          }}
           loading={isLoading}
           noItemsMessage={
             <>
@@ -242,16 +187,9 @@ const CategoryDashBoard = () => {
             </>
           }
         />
-
-        <EuiSpacer size="l"/>
-        <EuiFlexGroup>
-          <EuiFlexItem>
-            <Link to={`/categories/${categoryName}/channels`}>채널 전체보기</Link>
-          </EuiFlexItem>
-        </EuiFlexGroup>
       </EuiPageSection>
     </EuiPageBody>
   )
 }
 
-export default CategoryDashBoard;
+export default CategoryChannels;
