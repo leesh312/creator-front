@@ -171,9 +171,15 @@ const CategoryDashBoard = () => {
         >
           AD
         </span>
+
+        <EuiFlexGroup>
+          <EuiFlexItem>
+            <Link to={`/categories/${categoryName}/videos`}>전체보기</Link>
+          </EuiFlexItem>
+        </EuiFlexGroup>
       </EuiFlexGroup>
 
-        <EuiSpacer size="m"/>
+      <EuiSpacer size="m"/>
 
       { !!categoryDashboardData?.recentAdVideos?.length && (
           <>
@@ -209,22 +215,29 @@ const CategoryDashBoard = () => {
           </EuiFlexGroup>
 
           <EuiSpacer size="l"/>
-          <EuiFlexGroup>
-            <EuiFlexItem>
-              <Link to={`/categories/${categoryName}/videos`}>최근 광고 영상 전체보기</Link>
-            </EuiFlexItem>
-          </EuiFlexGroup>
         </>
       )}
 
       <EuiSpacer size="xl"/>
       <EuiSpacer size="m"/>
 
-      <EuiTitle size="s">
-        <h3>
-          인기 채널
-        </h3>
-      </EuiTitle>
+
+      <EuiFlexGroup
+        gutterSize="xs"
+        alignItems={"center"}
+      >
+        <EuiTitle size="s">
+          <h3>
+            인기 채널
+          </h3>
+        </EuiTitle>
+
+        <EuiFlexGroup>
+          <EuiFlexItem>
+            <Link to={`/categories/${categoryName}/channels`}>전체보기</Link>
+          </EuiFlexItem>
+        </EuiFlexGroup>
+      </EuiFlexGroup>
 
       <EuiPageSection>
         <EuiBasicTable
@@ -242,13 +255,7 @@ const CategoryDashBoard = () => {
             </>
           }
         />
-
         <EuiSpacer size="l"/>
-        <EuiFlexGroup>
-          <EuiFlexItem>
-            <Link to={`/categories/${categoryName}/channels`}>채널 전체보기</Link>
-          </EuiFlexItem>
-        </EuiFlexGroup>
       </EuiPageSection>
     </EuiPageBody>
   )
