@@ -44,18 +44,22 @@ const ChannelDetailPlaylist = ({title, isAd, showChannelAvatar, videos}: Props) 
                   grow={false}
                   style={{cursor: "pointer"}}
                 >
-                  <VideoItem
-                    channelThumbnail={""}
-                    videoKey={item.videoKey}
-                    videoThumbnail={item.thumbnailUrl}
-                    videoTitle={item.title}
-                    viewCount={item.viewCount}
-                    publishedAt={item.publishedAt?.toString() || ""}
-                    showChannelAvatar={showChannelAvatar}
-                  />
+                  <div
+                    style={{"width": "220px"}}
+                  >
+                    <VideoItem
+                      channelThumbnail={""}
+                      videoKey={item.videoKey}
+                      videoThumbnail={item.thumbnailUrl}
+                      videoTitle={item.title}
+                      viewCount={item.viewCount}
+                      publishedAt={item.publishedAt?.toString() || ""}
+                      showChannelAvatar={showChannelAvatar}
+                    />
+                  </div>
                 </EuiFlexItem>
               </a>
-            )
+          )
           })}
         </EuiFlexGroup>
       )}

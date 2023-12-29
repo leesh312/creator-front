@@ -109,17 +109,21 @@ export const CategoryVideos = () => {
                 }}
                 style={{cursor: "pointer"}}
               >
-                <VideoItem
-                  channelThumbnail={item.channelThumbnail}
-                  channelName={item.channelName}
-                  videoKey={item.videoKey}
-                  videoThumbnail={item.thumbnailUrl}
-                  videoTitle={item.title}
-                  viewCount={item.viewCount}
-                  publishedAt={item.publishedAt?.toString() || ""}
-                  showChannelName={true}
-                  showChannelAvatar={true}
-                />
+                <div
+                  style={{width: "265px"}}
+                >
+                  <VideoItem
+                    channelThumbnail={item.channelThumbnail}
+                    channelName={item.channelName}
+                    videoKey={item.videoKey}
+                    videoThumbnail={item.thumbnailUrl}
+                    videoTitle={item.title}
+                    viewCount={item.viewCount}
+                    publishedAt={item.publishedAt?.toString() || ""}
+                    showChannelName={true}
+                    showChannelAvatar={true}
+                  />
+                </div>
               </EuiFlexItem>
             ))
           }

@@ -20,17 +20,14 @@ interface VideoItemProps {
 
 const VideoItem = (props: VideoItemProps) => {
   return (
-    <div
-      style={{"width": "220px"}}
-    >
+    <div>
       <a
         href={`https://www.youtube.com/watch?v=${props.videoKey}`}
         target="_blank"
       >
         <img
           src={props.videoThumbnail}
-          width="220"
-          height="124"
+          width="100%"
           alt=""
           style={{"borderRadius": "4px"}}
         />
@@ -38,7 +35,6 @@ const VideoItem = (props: VideoItemProps) => {
       <EuiSpacer size="s"/>
       <EuiFlexGroup
         gutterSize="s"
-        alignItems="center"
       >
         {props.showChannelAvatar && (
           <EuiFlexItem

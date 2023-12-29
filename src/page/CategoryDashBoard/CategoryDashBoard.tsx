@@ -169,18 +169,22 @@ const CategoryDashBoard = () => {
                   grow={false}
                   style={{cursor: "pointer"}}
                 >
-                  <VideoItem
-                    channelThumbnail={item.channelThumbnail}
-                    channelName={item.channelName}
-                    videoKey={item.videoKey}
-                    videoThumbnail={item.thumbnailUrl}
-                    videoTitle={item.title}
-                    viewCount={item.viewCount}
-                    publishedAt={item.publishedAt?.toString() || ""}
-                    onChannelClick={() => { navigate(`/channels/${item.channelId}`) }}
-                    showChannelName
-                    showChannelAvatar
-                  />
+                  <div
+                    style={{ width: "265px"}}
+                  >
+                    <VideoItem
+                      channelThumbnail={item.channelThumbnail}
+                      channelName={item.channelName}
+                      videoKey={item.videoKey}
+                      videoThumbnail={item.thumbnailUrl}
+                      videoTitle={item.title}
+                      viewCount={item.viewCount}
+                      publishedAt={item.publishedAt?.toString() || ""}
+                      onChannelClick={() => { navigate(`/channels/${item.channelId}`) }}
+                      showChannelName
+                      showChannelAvatar
+                    />
+                  </div>
                 </EuiFlexItem>
               ))
             }
