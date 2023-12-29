@@ -47,8 +47,6 @@ interface SearchChannelResponseItem {
   thumbnailUrl: string
   followerCount: number
   contentsCount: number
-  viewRatio: number
-  commentRatio: number
   totalAdCount: number
   avgViewCount: number
   avgViewRatio: number
