@@ -25,9 +25,19 @@ const SideNav = () => {
   };
 
   const sideNav = [
+    createItem('유튜브 광고', {
+      onClick: undefined,
+      items: [
+        createItem('광고 채널 찾기', {
+          onClick: () => { navigate("/categories/entertainment") },
+        }),
+        createItem('광고 영상 모아보기', {
+          onClick: () => { navigate("/categories/entertainment") },
+        }),
+      ]
+    }),
     createItem('카테고리별 광고 영상/채널', {
       onClick: undefined,
-      icon: <EuiIcon type="logoElasticStack"/>,
       items: [
         createItem('엔터테인먼트', {
           onClick: () => { navigate("/categories/entertainment") },
@@ -71,14 +81,6 @@ const SideNav = () => {
         createItem('교육', {
           onClick: () => { navigate("/categories/education") },
         }),
-      ],
-    }),
-    createItem('설정', {
-      onClick: undefined,
-      icon: <EuiIcon type="logoCloudEnterprise"/>,
-      items: [
-        createItem('계정 설정'),
-        createItem('이용권'),
       ],
     }),
   ];

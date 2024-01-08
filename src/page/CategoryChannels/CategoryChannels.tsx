@@ -1,17 +1,20 @@
 import {
   EuiAvatar, EuiBadge,
   EuiBasicTable,
+  EuiCheckbox,
   EuiFlexGroup,
   EuiFlexItem,
+  EuiHealth,
   EuiPageBody, EuiPageSection,
   EuiPagination,
   EuiSpacer,
+  EuiSuperSelect,
   EuiTab,
   EuiTabs, EuiTextColor,
   EuiTitle
 } from "@elastic/eui";
 import VideoItem from "../../component/VideoItem";
-import React, {useMemo} from "react";
+import React, {useMemo, useState} from "react";
 import {Criteria} from "@elastic/eui/src/components/basic_table/basic_table";
 import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {useCategoryChannelData, useCategoryDashboardData} from "../../api/apis";
@@ -31,7 +34,16 @@ const CategoryChannels = () => {
     return p ? Number(p) : 1
   }, [searchParams])
 
-  const {data: channelData, isLoading } = useCategoryChannelData(categoryName, true, page)
+  const follower: string = useMemo(() => {
+    return searchParams.get("follower") || "all"
+  }, [searchParams])
+
+  const adonly: number = useMemo(() => {
+    const v = searchParams.get("adonly") || 1
+    return v ? Number(v) : 1
+  }, [searchParams])
+
+  const {data: channelData, isLoading } = useCategoryChannelData(categoryName, follower, !!adonly, page)
 
   const columns: Array<EuiTableFieldDataColumnType<SearchChannelResponseItem>> = [
     {
@@ -138,6 +150,94 @@ const CategoryChannels = () => {
     },
   ];
 
+  const options = [
+    {
+      value: 'all',
+      inputDisplay: (
+        <div>
+          팔로워수 전체
+        </div>
+      ),
+    },
+    {
+      value: '10000',
+      inputDisplay: (
+        <div>
+          팔로워수 1만 ~ 3만
+        </div>
+      ),
+    },
+    {
+      value: '30000',
+      inputDisplay: (
+        <div>
+          팔로워수 3만 ~ 5만
+        </div>
+      ),
+    },
+    {
+      value: '50000',
+      inputDisplay: (
+        <div>
+          팔로워수 5만 ~ 10만
+        </div>
+      ),
+    },
+    {
+      value: '100000',
+      inputDisplay: (
+        <div>
+          팔로워수 10만 ~ 30만
+        </div>
+      ),
+    },
+    {
+      value: '300000',
+      inputDisplay: (
+        <div>
+          팔로워수 30만 ~ 50만
+        </div>
+      ),
+    },
+    {
+      value: '500000',
+      inputDisplay: (
+        <div>
+          팔로워수 50만 ~ 100만
+        </div>
+      ),
+    },
+    {
+      value: '1000000',
+      inputDisplay: (
+        <div>
+          팔로워수 100만 ~ 300만
+        </div>
+      ),
+    },
+    {
+      value: '3000000',
+      inputDisplay: (
+        <div>
+          팔로워수 300만 ~ 500만
+        </div>
+      ),
+    },
+    {
+      value: '5000000',
+      inputDisplay: (
+        <div>
+          팔로워수 500만 이상
+        </div>
+      ),
+    },
+  ];
+  const [checked, setChecked] = useState(false);
+
+  const onSelectFollower = (value: string) => {
+    setSearchParams({ page: `${page}`, follower: value })
+  }
+
   return (
     <EuiPageBody
       paddingSize="l"
@@ -164,6 +264,31 @@ const CategoryChannels = () => {
         </h2>
       </EuiTitle>
 
+      <EuiSpacer size={"xl"} />
+
+      <EuiFlexGroup
+        alignItems={"center"}
+      >
+        <EuiFlexItem>
+          <EuiSuperSelect
+            options={options}
+            valueOfSelected={follower}
+            placeholder="팔로워수"
+            onChange={(value) => onSelectFollower(value)}
+          />
+        </EuiFlexItem>
+        <EuiFlexItem
+          grow={2}
+        >
+          <EuiCheckbox
+            id={"check1"}
+            label="광고영상 존재하는 채널만"
+            checked={!!adonly}
+            onChange={(e) => setChecked(!checked)}
+          />
+        </EuiFlexItem>
+      </EuiFlexGroup>
+
       <EuiPageSection>
         <EuiBasicTable
           tableCaption="채널 데이터"
@@ -171,11 +296,10 @@ const CategoryChannels = () => {
           columns={columns}
           tableLayout={'fixed'}
           onChange={(criteria: Criteria<any>) => {
-            setSearchParams({ page: `${(criteria.page?.index || 0) + 1}` })
+            setSearchParams({ page: `${(criteria.page?.index || 0) + 1}`, follower: follower })
           }}
           pagination={{
             pageIndex: (page - 1),
-            pageSize: (channelData?.totalPage || 1),
             totalItemCount: (channelData?.totalCount || 0),
             showPerPageOptions: false,
           }}

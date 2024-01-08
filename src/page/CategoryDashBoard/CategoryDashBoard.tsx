@@ -221,7 +221,6 @@ const CategoryDashBoard = () => {
       <EuiSpacer size="xl"/>
       <EuiSpacer size="m"/>
 
-
       <EuiFlexGroup
         gutterSize="xs"
         alignItems={"center"}

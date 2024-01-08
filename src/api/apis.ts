@@ -99,7 +99,7 @@ export const useCategoryDashboardData = (categoryName: string|undefined, page: n
 }
 
 export const apiGetCategoryVideoData = async (categoryName: string|undefined, onlyAd: boolean, period: string, page: number) => {
-  const res = await axios.get<CategoryDashboardResponse>(`/v1/categories/videos?categoryName=${categoryName}&page=${page}&only-ad=${onlyAd}&period=${period}`)
+  const res = await axios.get<CategoryDashboardResponse>(`/v1/categories/videos?categoryName=${categoryName}&page=${page}&onlyAd=${onlyAd}&period=${period}`)
   return res.data
 }
 export const useCategoryVideoData = (categoryName: string|undefined, onlyAd: boolean, period: string, page: number) => {
@@ -109,14 +109,14 @@ export const useCategoryVideoData = (categoryName: string|undefined, onlyAd: boo
   )
 }
 
-export const apiGetCategoryChannelData = async (categoryName: string|undefined, onlyAd: boolean, page: number) => {
-  const res = await  axios.get<CategoryDashboardResponse>(`/v1/categories/channels?categoryName=${categoryName}&page=${page}&only-ad=${onlyAd}`)
+export const apiGetCategoryChannelData = async (categoryName: string|undefined, follower: string|undefined, onlyAd: boolean, page: number) => {
+  const res = await  axios.get<CategoryDashboardResponse>(`/v1/categories/channels?categoryName=${categoryName}&follower=${follower}&page=${page}&onlyAd=${onlyAd}`)
   return res.data
 }
 
-export const useCategoryChannelData = (categoryName: string|undefined, onlyAd: boolean, page: number) => {
+export const useCategoryChannelData = (categoryName: string|undefined, follower: string, onlyAd: boolean, page: number) => {
   return useQuery(
-    ['/v1/categories/channels', categoryName, onlyAd, page],
-    () => apiGetCategoryChannelData(categoryName, onlyAd, page)
+    ['/v1/categories/channels', categoryName, follower, onlyAd, page],
+    () => apiGetCategoryChannelData(categoryName, follower, onlyAd, page)
   )
 }
